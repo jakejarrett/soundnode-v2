@@ -1,3 +1,24 @@
+:root {
+  --body-background: #121314;
+  --body-foreground: #ffffff;
+  --navbar-height: 50px;
+
+  --section-background: #222326;
+  --link-color: #a9aaae;
+  --default-color: #949599;
+  --separator-clean-color: #3e3e40;
+  --separator-dark-color: #000;
+  --soundcloud-orange: #f50;
+  --transition-value: all 0.5s ease;
+  --transition-fast-value: all 0.25s ease;
+  --transition-instant-value: all 0.1s ease-out;
+
+  /** Navigation */
+  --close-color: #FF4441;
+  --minimize-color: #FFBE00;
+  --maximize-color: #28c941;
+}
+
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
