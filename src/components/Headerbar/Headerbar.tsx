@@ -9,7 +9,7 @@ const HeaderbarOuter = styled.div({
     right: 0,
     width: '100vw',
     height: 'var(--navbar-height)',
-    background: 'black',
+    background: 'linear-gradient(to bottom, var(--body-background), 10%, #101010)',
     borderTop: '2px solid var(--soundcloud-orange)',
     boxShadow: '0 0 10px 0 #000000',
     'zIndex': 100,

@@ -41,6 +41,10 @@ body {
 	padding: 10px;
 }
 
+#root a.active {
+	background-color: var(--soundcloud-orange);
+}
+
 code {
 	font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
 }

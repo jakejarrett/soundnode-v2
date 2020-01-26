@@ -15,21 +15,18 @@ export const App: React.FC = () => {
 		<>
 			<Headerbar />
 			<div className="App">
-				<Navigation />
-				<div>
-					<Router>
+				<Router>
+					<Navigation />
+					<div>
+
 						<Switch>
-							<Route exact path="/stream">
+							<Route exact path="/">
 								<Stream />
 							</Route>
-							<Route exact path="/">
-								<Link to="/stream">Hello</Link>
-							</Route>
-
 						</Switch>
 
-					</Router>
-				</div>
+					</div>
+				</Router>
 			</div>
 		</>
 	);

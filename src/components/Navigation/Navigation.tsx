@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import { useSoundCloud } from '../useSoundCloud';
 import { SoundCloudUser } from '../util/Soundcloud';
 import { ipcRenderer } from 'electron';
+import { Link } from 'react-router-dom';
 
 const Sidebar = styled.div({
     position: "fixed",
@@ -23,7 +24,7 @@ const Sidebar = styled.div({
 
         '&:hover': {
             backgroundColor: 'var(--soundcloud-orange)',
-        }
+        },
     }
 });
 
@@ -68,11 +69,9 @@ const User = styled.div({
 });
 
 export const Navigation: React.FC<{}> = () => {
+    const logout = () => ipcRenderer.send('logout');
     const soundcloud = useSoundCloud();
     const [user, setUser] = React.useState<SoundCloudUser | null>(null);
-    const logout = () => {
-        ipcRenderer.send('logout');
-    }
     React.useEffect(() => {
         soundcloud.me.get().then(user => {
             if (typeof user !== 'number') {
@@ -82,6 +81,7 @@ export const Navigation: React.FC<{}> = () => {
         });
 
     }, [soundcloud.me]);
+
     return (
         <Sidebar>
             {user == null ? null : (
@@ -94,7 +94,7 @@ export const Navigation: React.FC<{}> = () => {
                     <p onClick={logout}>Logout</p>
                 </User>
             )}
-            <a href="/stream">Stream</a>
+            <Link to="/" className={window.location.pathname === '/' ? 'active' : ''}>Stream</Link>
         </Sidebar>
     )
 };

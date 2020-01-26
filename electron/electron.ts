@@ -172,9 +172,9 @@ app.on('ready', () => {
 });
 
 app.on('window-all-closed', () => {
-	// if (process.platform !== 'darwin') {
-	// 	app.quit();
-	// }
+	if (process.platform !== 'darwin') {
+		app.quit(0);
+	}
 });
 
 app.on('activate', () => {
