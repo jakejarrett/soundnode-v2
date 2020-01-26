@@ -121,6 +121,7 @@ const authenticateUser = () => {
 	authenticationWindow = new BrowserWindow({
 		width: 600,
 		height: 600,
+		// Retain frame on sign in to allow closing without needing to know how to quit an app via shortcuts.
 		frame: true,
 		darkTheme: true,
 		autoHideMenuBar: true,
