@@ -1,5 +1,5 @@
 import React from 'react';
-import styled, { CSSObject } from "styled-components";
+import styled from "styled-components";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimes, faMinus, faPlus } from '@fortawesome/free-solid-svg-icons';
 import { ipcRenderer } from 'electron';
@@ -11,7 +11,7 @@ const Wrapper = styled.div({
 	display: 'flex',
 	justifyContent: 'space-between',
 	alignItems: 'center',
-	width: '70px',
+	width: '60px',
 	height: '100%',
 	marginLeft: '20px',
 	'-webkit-app-region': 'no-drag',
@@ -21,7 +21,7 @@ const Wrapper = styled.div({
 
 interface ComponentProps { }
 
-const close = () => ipcRenderer.send('windowActionClicked', { action: 'close' });
+const onClick = (action: 'close' | 'minimize' | 'maximize' = 'close') => ipcRenderer.send('window-action-clicked', { action });
 
 interface Colors {
 	close: 'transparent' | '#4d0000';
@@ -29,7 +29,7 @@ interface Colors {
 	maximize: 'transparent' | '#006500';
 }
 
-const defaultState: Colors = { close: 'transparent', minimize: 'transparent', maximize: 'transparent' };
+const defaultState: Colors = Object.freeze({ close: 'transparent', minimize: 'transparent', maximize: 'transparent' });
 
 export const WindowActions: React.FC<ComponentProps> = () => {
 	const [color, setColor] = React.useState<Colors>(defaultState);
@@ -38,22 +38,24 @@ export const WindowActions: React.FC<ComponentProps> = () => {
 			close: '#4d0000',
 			maximize: "#006500",
 			minimize: "#995700",
-		})
+		});
 	};
 
 	const mouseOut = () => setColor(defaultState);
 
-	return <Wrapper onMouseOver={mouseIn} onMouseOut={mouseOut}>
-		<Close onClick={close}>
-			<FontAwesomeIcon icon={faTimes} color={color.close} size={"xs"} />
-		</Close>
+	return (
+		<Wrapper onMouseOver={mouseIn} onMouseOut={mouseOut}>
+			<Close onClick={() => onClick('close')}>
+				<FontAwesomeIcon icon={faTimes} color={color.close} size={"xs"} />
+			</Close>
 
-		<Minimize onClick={close}>
-			<FontAwesomeIcon icon={faMinus} color={color.minimize} size={"xs"} />
-		</Minimize>
+			<Minimize onClick={() => onClick('minimize')}>
+				<FontAwesomeIcon icon={faMinus} color={color.minimize} size={"xs"} />
+			</Minimize>
 
-		<Maximize onClick={close}>
-			<FontAwesomeIcon icon={faPlus} color={color.maximize} size={"xs"} />
-		</Maximize>
-	</Wrapper>
+			<Maximize onClick={() => onClick('maximize')}>
+				<FontAwesomeIcon icon={faPlus} color={color.maximize} size={"xs"} />
+			</Maximize>
+		</Wrapper>
+	);
 };

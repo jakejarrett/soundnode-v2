@@ -2,7 +2,7 @@
   "name": "soundnode-v2",
   "version": "0.1.0",
   "private": true,
-  "main": "public/electron.js",
+  "main": "public/electron.ts",
   "homepage": "./",
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^1.2.26",
@@ -17,11 +17,14 @@
     "@types/react-dom": "^16.9.0",
     "electron": "^7.1.10",
     "electron-is-dev": "^1.1.0",
+    "fs-extra": "^8.1.0",
+    "mkdirp": "^1.0.3",
     "react": "^16.12.0",
     "react-dom": "^16.12.0",
     "react-scripts": "3.3.0",
     "styled-components": "^5.0.0",
-    "typescript": "^3.7.5"
+    "typescript": "^3.7.5",
+    "user-home": "^2.0.0"
   },
   "scripts": {
     "start": "rescripts start",
