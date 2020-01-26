@@ -93,7 +93,6 @@ const createWindow = () => {
 					mainWindow.maximize();
 				}
 
-				mainWindow.saveState(mainWindow);
 				break;
 			}
 		}
@@ -138,9 +137,8 @@ const authenticateUser = () => {
 		accessToken = url.substring(url.indexOf(access_tokenStr) + 13, url.indexOf(expires_inStr));
 
 		accessToken = accessToken.split('&scope=')[0];
-		console.log(accessToken);
-		// // setUserData(accessToken);
-		// authenticationWindow.destroy();
+		setUserData(accessToken);
+		authenticationWindow.destroy();
 	});
 }
 

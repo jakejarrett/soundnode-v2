@@ -2,6 +2,7 @@
 	--body-background: #121314;
 	--body-foreground: #ffffff;
 	--navbar-height: 50px;
+	--sidebar-width: 160px;
 
 	--section-background: #222326;
 	--link-color: #a9aaae;
@@ -34,8 +35,10 @@ body {
 }
 
 #root {
-	height: 100%;
+	height: calc(100% - calc(var(--navbar-height) + 20px));
 	overflow: auto;
+	margin-left: var(--sidebar-width);
+	padding: 10px;
 }
 
 code {

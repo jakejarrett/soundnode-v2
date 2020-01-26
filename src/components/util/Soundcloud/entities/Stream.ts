@@ -8,7 +8,7 @@ export class Stream {
      * Gets your app connections, id any.
      */
     public get = async (): Promise<StreamResponse> => {
-        const response = await this.api.get(`/stream`, { mode: 'no-cors', limit: 30 });
+        const response = await this.api.get(`/stream`, { limit: 30 });
         return response;
     }
 
