@@ -10,6 +10,8 @@ Made more sense to deprecate all of angular rather than working with angular and
 - Uses more modern things (CSS Variables <3)
 - Hooks
 
+---
+
 # CRA Readme (leaving for now).
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
