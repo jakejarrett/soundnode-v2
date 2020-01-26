@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { useSoundCloud } from '../useSoundCloud';
 import { SoundCloudUser } from '../util/Soundcloud';
+import { ipcRenderer } from 'electron';
 
 const Sidebar = styled.div({
     position: "fixed",
@@ -27,30 +28,51 @@ const Sidebar = styled.div({
 });
 
 const User = styled.div({
-    display: 'flex',
-    alignContent: 'center',
-    alignItems: 'center',
-    padding: 10,
 
-    '& span': {
-        whiteSpace: 'nowrap',
-        overflow: 'hidden',
-        textOverflow: 'ellipsis',
-        fontWeight: 'bold',
-        fontSize: '0.9rem',
+    '& > div': {
+        display: 'flex',
+        alignContent: 'center',
+        alignItems: 'center',
+        padding: '10px 10px 0 10px',
+        flexWrap: 'wrap',
+        marginTop: 10,
+
+        '& span': {
+            whiteSpace: 'nowrap',
+            overflow: 'hidden',
+            textOverflow: 'ellipsis',
+            fontWeight: 'bold',
+            fontSize: '0.9rem',
+        },
+
+        '& img': {
+            marginRight: 10,
+            width: 30,
+            height: 30,
+            borderRadius: '100%',
+        },
+
     },
 
-    '& img': {
-        marginRight: 10,
-        width: 30,
-        height: 30,
-        borderRadius: '100%',
+
+    '& p': {
+        fontWeight: 'bold',
+        fontSize: '0.8rem',
+        cursor: 'pointer',
+        padding: 10,
+
+        '&:hover': {
+            backgroundColor: 'var(--soundcloud-orange)'
+        }
     }
 });
 
 export const Navigation: React.FC<{}> = () => {
     const soundcloud = useSoundCloud();
     const [user, setUser] = React.useState<SoundCloudUser | null>(null);
+    const logout = () => {
+        ipcRenderer.send('logout');
+    }
     React.useEffect(() => {
         soundcloud.me.get().then(user => {
             if (typeof user !== 'number') {
@@ -64,8 +86,12 @@ export const Navigation: React.FC<{}> = () => {
         <Sidebar>
             {user == null ? null : (
                 <User>
-                    <img src={user.avatar_url} alt={`${user.username}'s avatar.`} />
-                    <span>{user.username}</span>
+                    <div>
+                        <img src={user.avatar_url} alt={`${user.username}'s avatar.`} />
+                        <span>{user.username}</span>
+                    </div>
+
+                    <p onClick={logout}>Logout</p>
                 </User>
             )}
             <a href="/stream">Stream</a>

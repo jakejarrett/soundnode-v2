@@ -7,6 +7,8 @@ const path = require('path');
 
 const configuration = require(`${__dirname}/configLocation.js`);
 const fs = require('fs');
+const { removeSync } = require('fs-extra');
+
 const isDev = require('electron-is-dev');
 const windowStateKeeper = require('electron-window-state');
 
@@ -70,37 +72,44 @@ const createWindow = () => {
 
 	mainWindow.on('closed', () => mainWindow = null);
 
-	electron.ipcMain.on('window-action-clicked', (event, { action }) => {
-		switch (action) {
-			case "close": {
-				if (process.platform !== "darwin") {
-					mainWindow.destroy();
-				} else {
-					mainWindow.hide();
-				}
-				break;
-			}
-
-			case "minimize": {
-				mainWindow.minimize();
-				break;
-			}
-
-			case "maximize": {
-				if (mainWindow.isMaximized()) {
-					mainWindow.unmaximize()
-				} else {
-					mainWindow.maximize();
-				}
-
-				break;
-			}
-		}
-	});
-
 	// NOTE: This does not work if the CLI forces a SIGINT. (control + c to close)
 	mainWindowState.manage(mainWindow);
 }
+
+electron.ipcMain.on('window-action-clicked', (event, { action }) => {
+	switch (action) {
+		case "close": {
+			if (process.platform !== "darwin") {
+				mainWindow.close();
+			} else {
+				mainWindow.hide();
+			}
+			break;
+		}
+
+		case "minimize": {
+			mainWindow.minimize();
+			break;
+		}
+
+		case "maximize": {
+			if (mainWindow.isMaximized()) {
+				mainWindow.unmaximize()
+			} else {
+				mainWindow.maximize();
+			}
+
+			break;
+		}
+	}
+});
+
+electron.ipcMain.on('logout', () => {
+	removeSync(configuration.getPath());
+	authenticateUser();
+	mainWindow.close();
+	mainWindow = null;
+});
 
 /**
  * User config file doesn't exists
@@ -112,8 +121,9 @@ const authenticateUser = () => {
 	authenticationWindow = new BrowserWindow({
 		width: 600,
 		height: 600,
-		frame: false,
+		frame: true,
 		darkTheme: true,
+		autoHideMenuBar: true,
 		webPreferences: {
 			nodeIntegration: false,
 			webSecurity: false
@@ -122,6 +132,11 @@ const authenticateUser = () => {
 
 	authenticationWindow.loadURL(soundcloudConnectUrl);
 	authenticationWindow.show();
+
+	authenticationWindow.on('closed', () => {
+		authenticationWindow = null;
+		contents = null;
+	});
 
 	contents = authenticationWindow.webContents;
 
@@ -138,7 +153,7 @@ const authenticateUser = () => {
 
 		accessToken = accessToken.split('&scope=')[0];
 		setUserData(accessToken);
-		authenticationWindow.destroy();
+		authenticationWindow.close();
 	});
 }
 
@@ -156,9 +171,9 @@ app.on('ready', () => {
 });
 
 app.on('window-all-closed', () => {
-	if (process.platform !== 'darwin') {
-		app.quit();
-	}
+	// if (process.platform !== 'darwin') {
+	// 	app.quit();
+	// }
 });
 
 app.on('activate', () => {
