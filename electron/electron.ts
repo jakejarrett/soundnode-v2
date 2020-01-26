@@ -1,21 +1,26 @@
 /** Can't use real typescript, just gets type definitions from electron to make dev easier... */
 const electron = require('electron');
-const app = electron.app;
-const BrowserWindow = electron.BrowserWindow;
+const { app, BrowserWindow, globalShortcut } = electron;
 
+const { initializeMediaShortcuts, menuBar } = require('./globalMenu');
 const path = require('path');
 
 const configuration = require(`${__dirname}/configLocation.js`);
 const fs = require('fs');
 const isDev = require('electron-is-dev');
+const windowStateKeeper = require('electron-window-state');
 
 /** TODO: Get new key & move a hardcoded key out of git? */
+/** TODO: Provide a way to skip auth & allow to use the app w/o an api key. */
 const clientId = process.env.SOUNDCLOUD_CLIENT_ID || '342b8a7af638944906dcdb46f9d56d98';
 const redirectUri = process.env.REDIRECT_URL || 'http://sc-redirect.herokuapp.com/callback.html';
 const soundcloudConnectUrl = `https://soundcloud.com/connect?&client_id=${clientId}&redirect_uri=${redirectUri}&response_type=token`;
 
 let mainWindow;
 let authenticationWindow;
+
+const defaultWidth = process.env.DEFAULT_WIDTH || 1180;
+const defaultHeight = process.env.DEFAULT_HEIGHT || 755;
 
 const checkUserConfig = () => {
 	const containsConfig = configuration.containsConfig();
@@ -29,21 +34,39 @@ const checkUserConfig = () => {
 
 const createWindow = () => {
 	const url = isDev ? 'http://localhost:3000' : `file://${path.join(__dirname, '../build/index.html')}`
+	const mainWindowState = windowStateKeeper({ defaultWidth, defaultHeight });
+
 	mainWindow = new BrowserWindow({
-		width: 900,
-		height: 680,
+		x: mainWindowState.x,
+		y: mainWindowState.y,
+		width: mainWindowState.width,
+		height: mainWindowState.height,
+		minWidth: 800,
+		minHeight: 640,
+		center: true,
 		frame: false,
 		darkTheme: true,
 		webPreferences: {
-			nodeIntegration: true
+			nodeIntegration: true,
+			webSecurity: false
 		}
 	});
+
+	mainWindow.webContents.on('did-finish-load', () => {
+		mainWindow.setTitle('Soundnode');
+		mainWindow.show();
+		mainWindow.focus();
+	});
+
+	initializeMediaShortcuts();
+	menuBar();
 
 	mainWindow.loadURL(url);
 
 	if (isDev) {
 		mainWindow.webContents.openDevTools();
 	}
+
 
 	mainWindow.on('closed', () => mainWindow = null);
 
@@ -69,10 +92,15 @@ const createWindow = () => {
 				} else {
 					mainWindow.maximize();
 				}
+
+				mainWindow.saveState(mainWindow);
 				break;
 			}
 		}
 	});
+
+	// NOTE: This does not work if the CLI forces a SIGINT. (control + c to close)
+	mainWindowState.manage(mainWindow);
 }
 
 /**
@@ -140,3 +168,8 @@ app.on('activate', () => {
 		authenticateUser();
 	}
 });
+
+app.on('will-quit', () => {
+	// Unregister all shortcuts.
+	globalShortcut.unregisterAll()
+})

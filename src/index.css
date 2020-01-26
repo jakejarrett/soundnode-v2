@@ -1,34 +1,43 @@
 :root {
-  --body-background: #121314;
-  --body-foreground: #ffffff;
-  --navbar-height: 50px;
+	--body-background: #121314;
+	--body-foreground: #ffffff;
+	--navbar-height: 50px;
 
-  --section-background: #222326;
-  --link-color: #a9aaae;
-  --default-color: #949599;
-  --separator-clean-color: #3e3e40;
-  --separator-dark-color: #000;
-  --soundcloud-orange: #f50;
-  --transition-value: all 0.5s ease;
-  --transition-fast-value: all 0.25s ease;
-  --transition-instant-value: all 0.1s ease-out;
+	--section-background: #222326;
+	--link-color: #a9aaae;
+	--default-color: #949599;
+	--separator-clean-color: #3e3e40;
+	--separator-dark-color: #000;
+	--soundcloud-orange: #f50;
+	--transition-value: all 0.5s ease;
+	--transition-fast-value: all 0.25s ease;
+	--transition-instant-value: all 0.1s ease-out;
 
-  /** Navigation */
-  --close-color: #FF4441;
-  --minimize-color: #FFBE00;
-  --maximize-color: #28c941;
+	/** Navigation */
+	--close-color: #FF4441;
+	--minimize-color: #FFBE00;
+	--maximize-color: #28c941;
 }
 
 body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+	margin: 0;
+	font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+		'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+		sans-serif;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+	padding-top: var(--navbar-height);
+	background-color: var(--body-background);
+	color: var(--body-foreground);
+	overflow: hidden;
+	height: 100vh;
+}
+
+#root {
+	height: 100%;
+	overflow: auto;
 }
 
 code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+	font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
 }

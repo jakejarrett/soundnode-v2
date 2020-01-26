@@ -11,8 +11,7 @@ const HeaderbarOuter = styled.div({
     height: 'var(--navbar-height)',
     background: 'black',
     borderTop: '2px solid var(--soundcloud-orange)',
-    borderBottom: '1px solid var(--separator-dark-color)',
-    boxShadow: '0 0 7px 0px #000',
+    boxShadow: '0 0 10px 0 #000000',
     'zIndex': 100,
     '-webkit-app-region': 'drag',
 });
