@@ -141,7 +141,7 @@ const authenticateUser = () => {
 
 	contents = authenticationWindow.webContents;
 
-	contents.on('did-navigate', (_event, url, httpResponseCode) => {
+	contents.on('did-navigate', (_, url) => {
 		const access_tokenStr = 'access_token=';
 		const expires_inStr = '&expires_in';
 		let accessToken;
