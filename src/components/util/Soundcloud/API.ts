@@ -1,4 +1,5 @@
 import axios from "axios"
+import { ipcRenderer } from "electron"
 
 const apiURL = "https://api-v2.soundcloud.com/"
 const webURL = "https://www.soundcloud.com/"
@@ -15,7 +16,14 @@ export class API {
         if (this.oauthToken) params.oauth_token = this.oauthToken
         if (endpoint.startsWith("/")) endpoint = endpoint.slice(1)
         endpoint = apiURL + endpoint
-        const response = await axios.get(endpoint, { params }).then((r) => r.data)
+        const response = await axios.get(endpoint, { params })
+            .then(({ data }) => data)
+            // Catch all unauthorized.
+            .catch(err => {
+                if (err.response.status === 401) {
+                    ipcRenderer.send('logout');
+                }
+            });
         return response
     }
 

@@ -51,7 +51,6 @@ export class Me {
      * Gets your app connections, id any.
      */
     public connections = async () => {
-        const id = await this.get(true)
         const response = await this.api.get(`/me/connections`)
         return response as Promise<SoundCloudConnection[]>
     }
@@ -60,7 +59,6 @@ export class Me {
      * Gets a connection from its ID.
      */
     public connection = async (connectionID: number) => {
-        const id = await this.get(true)
         const response = await this.api.get(`/me/connections/${connectionID}`)
         return response as Promise<SoundCloudConnection>
     }

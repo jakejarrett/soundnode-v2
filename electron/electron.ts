@@ -106,16 +106,17 @@ electron.ipcMain.on('window-action-clicked', (event, { action }) => {
 
 electron.ipcMain.on('logout', () => {
 	removeSync(configuration.getPath());
-	authenticateUser();
-	mainWindow.close();
-	mainWindow = null;
+	authenticateUser(() => {
+		mainWindow.close();
+		mainWindow = null;
+	});
 });
 
 /**
  * User config file doesn't exists
  * therefore open soundcloud authentication page
  */
-const authenticateUser = () => {
+const authenticateUser = (afterOpen = () => { }) => {
 	let contents;
 
 	authenticationWindow = new BrowserWindow({
@@ -133,6 +134,10 @@ const authenticateUser = () => {
 
 	authenticationWindow.loadURL(soundcloudConnectUrl);
 	authenticationWindow.show();
+
+	if (afterOpen) {
+		afterOpen();
+	}
 
 	authenticationWindow.on('closed', () => {
 		authenticationWindow = null;

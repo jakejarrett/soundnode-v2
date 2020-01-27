@@ -1,8 +1,5 @@
 import React from 'react';
 import styled from 'styled-components';
-import { useSoundCloud } from '../useSoundCloud';
-import { SoundCloudUser } from '../util/Soundcloud';
-import { ipcRenderer } from 'electron';
 import { Link } from 'react-router-dom';
 
 const Sidebar = styled.div({
@@ -18,82 +15,29 @@ const Sidebar = styled.div({
         color: 'var(--body-foreground)',
         textDecoration: 'none',
         fontWeight: 'bold',
-        padding: 10,
+        padding: '5px 10px',
         display: 'block',
-        borderLeft: '4px solid var(--soundcloud-orange)',
+        borderLeft: '4px solid transparent',
+        fontSize: '0.8rem',
 
         '&:hover': {
-            backgroundColor: 'var(--soundcloud-orange)',
+            borderLeftColor: 'var(--soundcloud-orange)',
         },
-    }
-});
-
-const User = styled.div({
-
-    '& > div': {
-        display: 'flex',
-        alignContent: 'center',
-        alignItems: 'center',
-        padding: '10px 10px 0 10px',
-        flexWrap: 'wrap',
-        marginTop: 10,
-
-        '& span': {
-            whiteSpace: 'nowrap',
-            overflow: 'hidden',
-            textOverflow: 'ellipsis',
-            fontWeight: 'bold',
-            fontSize: '0.9rem',
-        },
-
-        '& img': {
-            marginRight: 10,
-            width: 30,
-            height: 30,
-            borderRadius: '100%',
-        },
-
     },
 
-
-    '& p': {
-        fontWeight: 'bold',
+    '& h5': {
+        textTransform: 'uppercase',
         fontSize: '0.8rem',
-        cursor: 'pointer',
-        padding: 10,
-
-        '&:hover': {
-            backgroundColor: 'var(--soundcloud-orange)'
-        }
+        margin: '15px 10px 10px',
+        opacity: 0.7,
+        // borderLeft: '4px solid transparent',
     }
 });
 
 export const Navigation: React.FC<{}> = () => {
-    const logout = () => ipcRenderer.send('logout');
-    const soundcloud = useSoundCloud();
-    const [user, setUser] = React.useState<SoundCloudUser | null>(null);
-    React.useEffect(() => {
-        soundcloud.me.get().then(user => {
-            if (typeof user !== 'number') {
-                setUser(user);
-            }
-
-        });
-
-    }, [soundcloud.me]);
-
     return (
         <Sidebar>
-            {user == null ? null : (
-                <User>
-                    <div>
-                        <img src={user.avatar_url} alt={`${user.username}'s avatar.`} />
-                        <span>{user.username}</span>
-                    </div>
-
-                    <p onClick={logout}>Logout</p>
-                </User>
-            )}
+            <h5>Discover</h5>
             <Link to="/" className={window.location.pathname === '/' ? 'active' : ''}>Stream</Link>
         </Sidebar>
     )

@@ -54,7 +54,7 @@ export class Configuration {
 
         /** Unsupported platform */
         if (userConfigPath === null) {
-            throw `could not set config path for this OS ${process.platform}`
+            throw new Error(`could not set config path for this OS ${process.platform}`);
         }
 
         this.createIfNotExist(userConfigPath)
