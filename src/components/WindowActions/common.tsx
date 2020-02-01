@@ -9,10 +9,7 @@ export const common: CSSObject = {
     cursor: 'pointer',
     borderRadius: '100%',
     letterSpacing: 0,
-    width: '14px',
-    height: '14px',
-
-    '& > svg': {
-        transform: 'scale(0.7)',
-    }
+    width: '15px',
+    height: '15px',
+    padding: 2,
 };

@@ -5,8 +5,4 @@ export const Close = styled.div({
     ...common,
     backgroundColor: 'var(--close-color)',
 
-    // '&:hover': {
-    // 	color: '
-    // }
-
 })

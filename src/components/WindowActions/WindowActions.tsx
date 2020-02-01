@@ -1,17 +1,17 @@
 import React from 'react';
 import styled from "styled-components";
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faTimes, faMinus, faPlus } from '@fortawesome/free-solid-svg-icons';
-import { ipcRenderer } from 'electron';
+import { ipcRenderer, remote } from 'electron';
 import { Close } from './Close';
 import { Minimize } from './Minimize';
 import { Maximize } from './Maximize';
+
+import { IoIosClose, IoIosRemove, IoIosExpand, IoIosContract } from 'react-icons/io';
 
 const Wrapper = styled.div({
 	display: 'flex',
 	justifyContent: 'space-between',
 	alignItems: 'center',
-	width: '60px',
+	width: '75px',
 	height: '100%',
 	marginLeft: '20px',
 	'-webkit-app-region': 'no-drag',
@@ -33,6 +33,7 @@ const defaultState: Colors = Object.freeze({ close: 'transparent', minimize: 'tr
 
 export const WindowActions: React.FC<ComponentProps> = () => {
 	const [color, setColor] = React.useState<Colors>(defaultState);
+	const [maximized, setMaximized] = React.useState<boolean>(false);
 	const mouseIn = () => {
 		setColor({
 			close: '#4d0000',
@@ -43,18 +44,30 @@ export const WindowActions: React.FC<ComponentProps> = () => {
 
 	const mouseOut = () => setColor(defaultState);
 
+	React.useEffect(() => {
+		const handleMaximizeChange = (event: Electron.IpcRendererEvent, isMaximized: boolean) => {
+			console.log('yeah');
+			setMaximized(isMaximized);
+		};
+		ipcRenderer.on('maximize-change', handleMaximizeChange);
+
+		return () => {
+			ipcRenderer.removeListener('maximize-change', handleMaximizeChange)
+		}
+	}, [maximized]);
+
 	return (
 		<Wrapper onMouseOver={mouseIn} onMouseOut={mouseOut}>
 			<Close onClick={() => onClick('close')}>
-				<FontAwesomeIcon icon={faTimes} color={color.close} size={"xs"} />
+				<IoIosClose color={color.close} size={"1em"} />
 			</Close>
 
 			<Minimize onClick={() => onClick('minimize')}>
-				<FontAwesomeIcon icon={faMinus} color={color.minimize} size={"xs"} />
+				<IoIosRemove color={color.minimize} size={"1em"} />
 			</Minimize>
 
 			<Maximize onClick={() => onClick('maximize')}>
-				<FontAwesomeIcon icon={faPlus} color={color.maximize} size={"xs"} />
+				{maximized ? (<IoIosContract color={color.maximize} size={"1em"} />) : (<IoIosExpand color={color.maximize} size={"1em"} />)}
 			</Maximize>
 		</Wrapper>
 	);

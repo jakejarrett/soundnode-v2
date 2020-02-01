@@ -69,6 +69,14 @@ const createWindow = () => {
 		mainWindow.webContents.openDevTools();
 	}
 
+	mainWindow.on('maximize', () => {
+		mainWindow.webContents.send('maximize-change', true);
+	});
+
+	mainWindow.on('unmaximize', () => {
+		mainWindow.webContents.send('maximize-change', false);
+	});
+
 
 	mainWindow.on('closed', () => mainWindow = null);
 
@@ -107,8 +115,10 @@ electron.ipcMain.on('window-action-clicked', (event, { action }) => {
 electron.ipcMain.on('logout', () => {
 	removeSync(configuration.getPath());
 	authenticateUser(() => {
-		mainWindow.close();
-		mainWindow = null;
+		if (mainWindow != null) {
+			mainWindow.close();
+			mainWindow = null;
+		}
 	});
 });
 
@@ -116,7 +126,7 @@ electron.ipcMain.on('logout', () => {
  * User config file doesn't exists
  * therefore open soundcloud authentication page
  */
-const authenticateUser = (afterOpen = () => { }) => {
+const authenticateUser = (afterOpen) => {
 	let contents;
 
 	authenticationWindow = new BrowserWindow({

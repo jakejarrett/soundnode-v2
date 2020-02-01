@@ -3,8 +3,7 @@ import styled from 'styled-components';
 import { ipcRenderer } from 'electron';
 import { useSoundCloud } from '../useSoundCloud';
 import { SoundCloudUser } from '../util/Soundcloud';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faChevronDown } from '@fortawesome/free-solid-svg-icons';
+import { IoIosArrowDown } from 'react-icons/io';
 
 const UserComponent = styled.div({
     float: 'right',
@@ -15,7 +14,7 @@ const UserComponent = styled.div({
         alignItems: 'center',
         padding: '0 20px',
         flexWrap: 'wrap',
-        marginTop: 10,
+        margin: '0 10px',
 
         '& span': {
             whiteSpace: 'nowrap',
@@ -44,11 +43,22 @@ const UserComponent = styled.div({
         padding: '5px 10px',
         borderLeft: '4px solid transparent',
 
-        '&:hover': {
-            borderLeftColor: 'var(--soundcloud-orange)'
-        }
+        // '&:hover': {
+        //     borderLeftColor: 'var(--soundcloud-orange)'
+        // }
     }
 });
+
+const Dropdown = styled.div({
+    position: 'absolute',
+    top: 50,
+    right: 10,
+    width: 150,
+    background: 'rgba(0, 0, 0, 0.8)',
+    boxShadow: '0 0 10px 0 #000000',
+    borderRadius: '0 0 10px 10px',
+    backdropFilter: 'blur(15px)'
+})
 
 export const User = () => {
     const logout = () => ipcRenderer.send('logout');
@@ -73,14 +83,14 @@ export const User = () => {
         <div>
             <img src={user.avatar_url} alt={`${user.username}'s avatar.`} />
             <span>{user.username}</span>
-            <FontAwesomeIcon icon={faChevronDown} size={'xs'} onClick={toggleDropdown} />
+            <IoIosArrowDown size={'1em'} onClick={toggleDropdown} />
         </div>
 
         {dropdownShown ? (
-            <div>
+            <Dropdown>
                 <p onClick={logout}>Logout</p>
 
-            </div>
+            </Dropdown>
         ) : null}
 
     </UserComponent>)

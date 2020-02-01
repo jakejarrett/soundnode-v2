@@ -13,6 +13,7 @@
 	--transition-value: all 0.5s ease;
 	--transition-fast-value: all 0.25s ease;
 	--transition-instant-value: all 0.1s ease-out;
+	--disabled-color: rgba(255, 255, 255, 0.3);
 
 	/** Navigation */
 	--close-color: #FF4441;
@@ -42,9 +43,14 @@ body {
 }
 
 #root a.active {
-	background-color: var(--soundcloud-orange);
+	border-color: var(--soundcloud-orange);
+	color: var(--soundcloud-orange);
 }
 
 code {
 	font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
+}
+
+.window-actions-container {
+	max-width: 160px;
 }
