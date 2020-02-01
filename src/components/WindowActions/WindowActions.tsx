@@ -11,7 +11,7 @@ const Wrapper = styled.div({
 	display: 'flex',
 	justifyContent: 'space-between',
 	alignItems: 'center',
-	width: '75px',
+	width: '70px',
 	height: '100%',
 	marginLeft: '20px',
 	'-webkit-app-region': 'no-drag',
@@ -45,10 +45,7 @@ export const WindowActions: React.FC<ComponentProps> = () => {
 	const mouseOut = () => setColor(defaultState);
 
 	React.useEffect(() => {
-		const handleMaximizeChange = (event: Electron.IpcRendererEvent, isMaximized: boolean) => {
-			console.log('yeah');
-			setMaximized(isMaximized);
-		};
+		const handleMaximizeChange = (event: Electron.IpcRendererEvent, isMaximized: boolean) => setMaximized(isMaximized);
 		ipcRenderer.on('maximize-change', handleMaximizeChange);
 
 		return () => {
@@ -59,15 +56,15 @@ export const WindowActions: React.FC<ComponentProps> = () => {
 	return (
 		<Wrapper onMouseOver={mouseIn} onMouseOut={mouseOut}>
 			<Close onClick={() => onClick('close')}>
-				<IoIosClose color={color.close} size={"1em"} />
+				<IoIosClose color={color.close} size={"0.9em"} />
 			</Close>
 
 			<Minimize onClick={() => onClick('minimize')}>
-				<IoIosRemove color={color.minimize} size={"1em"} />
+				<IoIosRemove color={color.minimize} size={"0.9em"} />
 			</Minimize>
 
 			<Maximize onClick={() => onClick('maximize')}>
-				{maximized ? (<IoIosContract color={color.maximize} size={"1em"} />) : (<IoIosExpand color={color.maximize} size={"1em"} />)}
+				{maximized ? (<IoIosContract color={color.maximize} size={"0.9em"} />) : (<IoIosExpand color={color.maximize} size={"1em"} />)}
 			</Maximize>
 		</Wrapper>
 	);

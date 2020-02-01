@@ -48,6 +48,15 @@ const HeaderbarInner = styled.div({
     width: '100%',
 });
 
+const IconSearch = styled.div({
+    width: '100%', display: 'flex',
+    alignItems: 'center',
+
+    '& a': {
+        '-webkit-app-region': 'no-drag',
+    }
+})
+
 interface ComponentProps {
 
 }
@@ -58,7 +67,7 @@ export const Headerbar: React.FC<ComponentProps> = () => {
             <HeaderbarInner className="window-actions-container">
                 <WindowActions />
             </HeaderbarInner>
-            <HeaderbarInner>
+            <IconSearch>
                 <IconWrapper>
                     <IoIosArrowBack size="1em" />
                 </IconWrapper>
@@ -66,7 +75,7 @@ export const Headerbar: React.FC<ComponentProps> = () => {
                     <IoIosArrowForward size="1em" />
                 </IconWrapper>
                 <input placeholder="Search soundcloud" />
-            </HeaderbarInner>
+            </IconSearch>
             <HeaderbarInner>
                 <User />
             </HeaderbarInner>

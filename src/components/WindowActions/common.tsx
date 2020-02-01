@@ -11,5 +11,5 @@ export const common: CSSObject = {
     letterSpacing: 0,
     width: '15px',
     height: '15px',
-    padding: 2,
+    padding: 1,
 };
