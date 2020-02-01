@@ -12,6 +12,7 @@ const SongComponent = styled.div({
     background: 'rgba(0, 0, 0, 0.5)',
     margin: 10,
     borderRadius: 10,
+    boxShadow: '0 10px 20px -10px rgba(0, 0, 0, 1)',
 });
 
 const Artwork = styled.div({
