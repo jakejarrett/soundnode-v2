@@ -1,10 +1,10 @@
 :root {
-	--body-background: #121314;
+	--body-background: #151515;
 	--body-foreground: #ffffff;
 	--navbar-height: 50px;
 	--sidebar-width: 160px;
 
-	--section-background: #222326;
+	--section-background: #111111;
 	--link-color: #a9aaae;
 	--default-color: #949599;
 	--separator-clean-color: #3e3e40;
@@ -33,6 +33,27 @@ body {
 	color: var(--body-foreground);
 	overflow: hidden;
 	height: 100vh;
+}
+
+/* width */
+::-webkit-scrollbar {
+	width: 6px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+	background: var(--body-background);
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+	background: var(--soundcloud-orange);
+	border-radius: 10px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+	background: #555;
 }
 
 #root {
