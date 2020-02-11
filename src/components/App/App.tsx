@@ -14,8 +14,9 @@ import { useSoundCloud } from '../useSoundCloud';
 
 export const App: React.FC = () => {
 	const [currentlyPlaying, setCurrentlyPlaying] = React.useState<SoundCloudTrack | null>(null);
+	const [currentlyPlayingId, setCurrentlyPlayingId] = React.useState<string | undefined>();
 	const onPlay = (entity: Track | Playlist | TrackRepost | PlaylistRepost) => {
-		let url;
+		setCurrentlyPlayingId(entity.uuid);
 		if (entity.type === 'track' || entity.type === 'track-repost') {
 			const toGet = entity.track.media.transcodings[1].url;
 			fetch(`${toGet}?client_id=${SoundCloud.clientID}`).then(res => res.json()).then(trackUrl => {
@@ -52,7 +53,7 @@ export const App: React.FC = () => {
 
 						<Switch>
 							<Route exact path="/">
-								<Stream onPlay={onPlay} />
+								<Stream onPlay={onPlay} currentlyPlayingId={currentlyPlayingId} />
 							</Route>
 						</Switch>
 

@@ -1,6 +1,6 @@
 import React from 'react';
 import { Track, Playlist, TrackRepost, PlaylistRepost } from "../util/Soundcloud";
-import { IoIosRepeat, IoIosMusicalNote, IoIosPlay, IoIosHeart } from 'react-icons/io';
+import { IoIosRepeat, IoIosMusicalNote, IoIosPlay, IoIosHeart, IoIosPause } from 'react-icons/io';
 import { MdAudiotrack, MdPlaylistPlay } from 'react-icons/md';
 import styled from "styled-components";
 import approximateNumber from 'approximate-number';
@@ -86,15 +86,20 @@ const SongCover = styled.div({
 
     '&:hover': {
         opacity: 1,
-    }
+    },
+
+    '&.active': {
+        opacity: 1,
+    },
 })
 
 interface ComponentProps {
     entity: Track | Playlist | TrackRepost | PlaylistRepost;
-    onClickPlay: (entity: Track | Playlist | TrackRepost | PlaylistRepost) => void
+    onClickPlay: (entity: Track | Playlist | TrackRepost | PlaylistRepost) => void;
+    currentlyPlayingId?: string;
 }
 
-export const Song: React.FC<ComponentProps> = ({ entity, onClickPlay }) => {
+export const Song: React.FC<ComponentProps> = ({ entity, onClickPlay, currentlyPlayingId }) => {
     const artwork: string = entity.type === 'track' || entity.type === 'track-repost' ?
         entity.track.artwork_url || entity.track.user.avatar_url :
         entity.playlist.artwork_url || entity.playlist.tracks[0].artwork_url;
@@ -106,8 +111,12 @@ export const Song: React.FC<ComponentProps> = ({ entity, onClickPlay }) => {
     return (
         <SongComponent key={entity.uuid}>
             <Artwork style={{ backgroundImage: `url(${artwork == null ? '' : artwork.replace('-large.', '-t200x200.')})` }}>
-                <SongCover onClick={e => onClickPlay(entity)}>
-                    <IoIosPlay size="3rem" />
+                <SongCover onClick={e => onClickPlay(entity)} className={currentlyPlayingId === entity.uuid ? 'active' : ''}>
+                    {currentlyPlayingId === entity.uuid ? (
+                        <IoIosPause size="3rem" />
+                    ) : (
+                            <IoIosPlay size="3rem" />
+                        )}
                 </SongCover>
             </Artwork>
             <SongTitle>
