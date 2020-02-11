@@ -10,11 +10,14 @@ import { Track, Playlist, TrackRepost, PlaylistRepost, SoundCloudTrack, SoundClo
 import { Headerbar } from '../Headerbar';
 import { Stream } from '../Stream';
 import { Navigation } from '../Navigation';
-import { useSoundCloud } from '../useSoundCloud';
+import approximateNumber from 'approximate-number';
+import { secondsToTime } from '../util/secondsToTime';
 
 export const App: React.FC = () => {
 	const [currentlyPlaying, setCurrentlyPlaying] = React.useState<SoundCloudTrack | null>(null);
 	const [currentlyPlayingId, setCurrentlyPlayingId] = React.useState<string | undefined>();
+	const [currentTime, setCurrentTime] = React.useState<number | undefined>();
+	const audioRef = React.useRef<HTMLAudioElement | null>(null);
 	const onPlay = (entity: Track | Playlist | TrackRepost | PlaylistRepost) => {
 		setCurrentlyPlayingId(entity.uuid);
 		if (entity.type === 'track' || entity.type === 'track-repost') {
@@ -59,7 +62,27 @@ export const App: React.FC = () => {
 
 					</div>
 				</Router>
-				<audio src={currentlyPlaying && `${currentlyPlaying.stream_url}` || ''} autoPlay />
+				{currentTime == null ? null : (
+					<div style={{
+						position: 'absolute',
+						bottom: 0,
+						left: 0,
+						width: '100vw',
+						height: 30,
+						display: 'flex',
+						alignItems: 'center',
+						alignContent: 'center',
+						backgroundColor: 'black',
+					}}>
+						{<p>{secondsToTime(currentTime).rendered}</p>}
+					</div>
+				)}
+				<audio
+					ref={audioRef}
+					src={currentlyPlaying && `${currentlyPlaying.stream_url}` || ''}
+					autoPlay
+					onTimeUpdate={e => setCurrentTime(e.currentTarget.currentTime)}
+				/>
 			</div>
 		</>
 	);
