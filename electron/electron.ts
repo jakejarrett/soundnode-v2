@@ -20,6 +20,8 @@ const soundcloudConnectUrl = `https://soundcloud.com/connect?&client_id=${client
 
 let mainWindow;
 let authenticationWindow;
+const max_window_count = 1;
+let current_window_count = 0;
 
 const defaultWidth = process.env.DEFAULT_WIDTH || 1180;
 const defaultHeight = process.env.DEFAULT_HEIGHT || 755;

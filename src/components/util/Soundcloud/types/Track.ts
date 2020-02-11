@@ -41,6 +41,18 @@ export interface SoundCloudTrackFilter {
     types?: string
 }
 
+export interface SoundcloudTranscodings {
+    url: string;
+    preset: string;
+    duration: number;
+    snipped: boolean;
+    format: {
+        protocol: string;
+        mime_type: string;
+    };
+    quality: string;
+}
+
 export interface SoundCloudTrack {
     comment_count: number
     release: number | ""
@@ -96,6 +108,9 @@ export interface SoundCloudTrack {
     label_id: number | null
     asset_data?: string
     artwork_data?: string
+    media: {
+        transcodings: SoundcloudTranscodings[];
+    }
 }
 
 export interface SoundCloudSecretToken {

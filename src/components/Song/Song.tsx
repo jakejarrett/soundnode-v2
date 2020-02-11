@@ -91,9 +91,10 @@ const SongCover = styled.div({
 
 interface ComponentProps {
     entity: Track | Playlist | TrackRepost | PlaylistRepost;
+    onClickPlay: (entity: Track | Playlist | TrackRepost | PlaylistRepost) => void
 }
 
-export const Song: React.FC<ComponentProps> = ({ entity }) => {
+export const Song: React.FC<ComponentProps> = ({ entity, onClickPlay }) => {
     const artwork: string = entity.type === 'track' || entity.type === 'track-repost' ?
         entity.track.artwork_url || entity.track.user.avatar_url :
         entity.playlist.artwork_url || entity.playlist.tracks[0].artwork_url;
@@ -105,7 +106,7 @@ export const Song: React.FC<ComponentProps> = ({ entity }) => {
     return (
         <SongComponent key={entity.uuid}>
             <Artwork style={{ backgroundImage: `url(${artwork == null ? '' : artwork.replace('-large.', '-t200x200.')})` }}>
-                <SongCover>
+                <SongCover onClick={e => onClickPlay(entity)}>
                     <IoIosPlay size="3rem" />
                 </SongCover>
             </Artwork>

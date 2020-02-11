@@ -1,4 +1,5 @@
 import React from 'react';
+
 import { StreamResponse, Track, Playlist, TrackRepost, PlaylistRepost } from "../util/Soundcloud"
 import { useSoundCloud } from '../useSoundCloud';
 import styled from 'styled-components';
@@ -9,7 +10,11 @@ const Container = styled.div({
     flexWrap: 'wrap',
 });
 
-export const Stream = () => {
+interface ComponentProps {
+    onPlay: (entity: Track | Playlist | TrackRepost | PlaylistRepost) => void;
+}
+
+export const Stream: React.FC<ComponentProps> = ({ onPlay }) => {
     const soundcloud = useSoundCloud();
     const [streamResponse, setStreamResponse] = React.useState<StreamResponse | null>(null);
     const ids = streamResponse == null ? [] : streamResponse.collection.map(entity => entity.type === 'track' || entity.type === 'track-repost' ? entity.track.id : entity.playlist.id);
@@ -36,7 +41,7 @@ export const Stream = () => {
                         return true;
                     }
                     return false;
-                }).map(entity => <Song entity={entity} />)}
+                }).map(entity => <Song entity={entity} onClickPlay={onPlay} />)}
             </Container>
         </>
     )
