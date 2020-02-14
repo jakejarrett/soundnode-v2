@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import { WindowActions } from '../WindowActions';
 import { User } from '../User';
 import { IoIosArrowForward, IoIosArrowBack } from 'react-icons/io';
+import { SoundCloud } from '../util/Soundcloud';
 
 const HeaderbarOuter = styled.div({
     display: 'flex',
@@ -61,7 +62,24 @@ interface ComponentProps {
 
 }
 
+const get = async (url: string) => {
+    const fetched = await fetch(`${url}?client_id=${SoundCloud.clientID}`);
+    const json = await fetched.json();
+    return json;
+}
+
 export const Headerbar: React.FC<ComponentProps> = () => {
+    const handleOnChange = (ev: React.ChangeEvent<HTMLInputElement>) => {
+        const value = ev.currentTarget.value;
+
+        if (value.includes('soundcloud:')) {
+            const cleansed = value.replace(/[^0-9a-z]\:/gi, '');
+            const split = cleansed.split(':');
+
+            get(`https://api.soundcloud.com/${split[1]}/${split[2]}`).then(console.log)
+        }
+    }
+
     return (
         <HeaderbarOuter>
             <HeaderbarInner className="window-actions-container">
@@ -74,7 +92,7 @@ export const Headerbar: React.FC<ComponentProps> = () => {
                 <IconWrapper>
                     <IoIosArrowForward size="1em" />
                 </IconWrapper>
-                <input placeholder="Search soundcloud" />
+                <input placeholder="Search soundcloud" onChange={handleOnChange} />
             </IconSearch>
             <HeaderbarInner>
                 <User />
