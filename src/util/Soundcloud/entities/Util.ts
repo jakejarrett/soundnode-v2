@@ -22,7 +22,7 @@ export class Util {
         return new Promise((resolve, reject) => {
             writeStream.on("finish", resolve)
             writeStream.on("error", reject)
-        })
+        });
     }
 
     /** Maybe also use this to cache tracks in the background if possible, saving amount of times the API is hit. */

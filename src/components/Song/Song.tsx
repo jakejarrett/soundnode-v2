@@ -1,5 +1,5 @@
 import React from 'react';
-import { Track, Playlist, TrackRepost, PlaylistRepost } from "../util/Soundcloud";
+import { Track, Playlist, TrackRepost, PlaylistRepost } from "../../util/Soundcloud";
 import { IoIosRepeat, IoIosMusicalNote, IoIosPlay, IoIosHeart, IoIosPause } from 'react-icons/io';
 import { MdAudiotrack, MdPlaylistPlay } from 'react-icons/md';
 import styled from "styled-components";
@@ -91,7 +91,7 @@ const SongCover = styled.div({
 	'&.active': {
 		opacity: 1,
 	},
-})
+});
 
 interface ComponentProps {
 	entity: Track | Playlist | TrackRepost | PlaylistRepost;

@@ -211,4 +211,4 @@ app.on('activate', () => {
 app.on('will-quit', () => {
 	// Unregister all shortcuts.
 	globalShortcut.unregisterAll()
-})
+});

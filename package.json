@@ -67,6 +67,7 @@
     "babel-plugin-styled-components": "^1.10.6",
     "concurrently": "^5.0.2",
     "electron-builder": "^22.2.0",
+    "react-hotkeys-hook": "^1.5.4",
     "wait-on": "^4.0.0"
   }
 }

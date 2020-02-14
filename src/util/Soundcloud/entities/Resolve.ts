@@ -12,7 +12,7 @@ export class Resolve {
         }
         let id = resolvable
         if (String(resolvable).includes("soundcloud")) {
-            const resolved = await this.api.get(`resolve`, { url: resolvable })
+            const resolved = await this.api.get(`resolve`, { url: resolvable });
             if (full) return resolved
             id = resolved.id
         }

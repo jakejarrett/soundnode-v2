@@ -1,8 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
 import { ipcRenderer } from 'electron';
-import { useSoundCloud } from '../useSoundCloud';
-import { SoundCloudUser } from '../util/Soundcloud';
+import { useSoundCloud } from '../../hooks/useSoundCloud';
+import { SoundCloudUser } from '../../util/Soundcloud';
 import { IoIosArrowDown } from 'react-icons/io';
 
 const UserComponent = styled.div({
@@ -58,7 +58,7 @@ const Dropdown = styled.div({
     boxShadow: '0 0 10px 0 #000000',
     borderRadius: '0 0 10px 10px',
     backdropFilter: 'blur(15px)'
-})
+});
 
 export const User = () => {
     const logout = () => ipcRenderer.send('logout');

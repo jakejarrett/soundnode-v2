@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { SoundCloud } from '../util/Soundcloud';
+import { SoundCloud } from '../../util/Soundcloud';
 import { useConfig } from '../useConfig';
 
 export const useSoundCloud = () => {

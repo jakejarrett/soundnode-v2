@@ -1,7 +1,7 @@
 import React from 'react';
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
-import { Track, Playlist, TrackRepost, PlaylistRepost, SoundCloudTrack, SoundCloud } from "../util/Soundcloud";
+import { Track, Playlist, TrackRepost, PlaylistRepost, SoundCloudTrack, SoundCloud } from "../../util/Soundcloud";
 import { Headerbar } from '../Headerbar';
 import { Stream } from '../Stream';
 import { Navigation } from '../Navigation';
@@ -14,10 +14,13 @@ interface AudioState {
 }
 
 export const App: React.FC = () => {
-	const [audioState, setAudioState] = React.useState<AudioState>({ currentTime: 0, duration: 0, playing: false })
+	const [audioState, setAudioState] = React.useState<AudioState>({ currentTime: 0, duration: 0, playing: false });
 	const [currentlyPlaying, setCurrentlyPlaying] = React.useState<SoundCloudTrack | null>(null);
 	const [currentlyPlayingId, setCurrentlyPlayingId] = React.useState<string | undefined>();
 	const audioRef = React.useRef<HTMLAudioElement | null>(null);
+	const getNextSong = () => {
+		console.log('next song needed');
+	}
 	const onPlay = (entity: Track | Playlist | TrackRepost | PlaylistRepost) => {
 		if (entity.uuid === currentlyPlayingId) {
 			const isPlaying = audioState.playing;
@@ -94,6 +97,7 @@ export const App: React.FC = () => {
 					autoPlay
 					onTimeUpdate={e => setAudioState({ ...audioState, currentTime: e.currentTarget.currentTime })}
 					onDurationChange={e => setAudioState({ ...audioState, duration: e.currentTarget.duration })}
+					onEnded={e => getNextSong()}
 				/>
 			</div>
 		</>

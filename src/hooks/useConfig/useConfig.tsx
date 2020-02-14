@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Config, Configuration } from '../util/Configuration';
+import { Config, Configuration } from '../../util/Configuration';
 
 export const useConfig = () => {
     const { config } = new Configuration();

@@ -1,7 +1,7 @@
 import React from 'react';
 
-import { StreamResponse, Track, Playlist, TrackRepost, PlaylistRepost } from "../util/Soundcloud"
-import { useSoundCloud } from '../useSoundCloud';
+import { StreamResponse, Track, Playlist, TrackRepost, PlaylistRepost } from "../../util/Soundcloud"
+import { useSoundCloud } from '../../hooks/useSoundCloud';
 import styled from 'styled-components';
 import { Song } from '../Song';
 

@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { WindowActions } from '../WindowActions';
 import { User } from '../User';
 import { IoIosArrowForward, IoIosArrowBack } from 'react-icons/io';
-import { SoundCloud } from '../util/Soundcloud';
+import { SoundCloud } from '../../util/Soundcloud';
 
 const HeaderbarOuter = styled.div({
     display: 'flex',
@@ -43,7 +43,7 @@ const HeaderbarOuter = styled.div({
 const IconWrapper = styled.a({
     display: 'inline-block',
     margin: '0 10px 0 0',
-})
+});
 
 const HeaderbarInner = styled.div({
     width: '100%',
@@ -56,7 +56,7 @@ const IconSearch = styled.div({
     '& a': {
         '-webkit-app-region': 'no-drag',
     }
-})
+});
 
 interface ComponentProps {
 

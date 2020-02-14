@@ -1,6 +1,6 @@
 import React from 'react';
-import { SoundCloudTrack } from '../util/Soundcloud';
-import { secondsToTime } from '../util/secondsToTime';
+import { SoundCloudTrack } from '../../util/Soundcloud';
+import { secondsToTime } from '../../util/secondsToTime';
 import styled from 'styled-components';
 
 export interface ComponentProps {
@@ -45,7 +45,7 @@ const Artwork = styled.img({
     maxWidth: '100%',
     marginLeft: 10,
     marginRight: 10,
-})
+});
 
 export const Footer: React.FC<ComponentProps> = ({ currentTime, trackLength, track }) => (
     <FooterWrapper>
