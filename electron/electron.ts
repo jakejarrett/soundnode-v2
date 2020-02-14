@@ -130,6 +130,13 @@ electron.ipcMain.on('logout', () => {
  */
 const authenticateUser = (afterOpen) => {
 	let contents;
+	// todo: figure out how to deal with this.
+	// Sessions after 24 hours will log you out.
+	if (current_window_count > max_window_count) {
+		return;
+	}
+
+	current_window_count++;
 
 	authenticationWindow = new BrowserWindow({
 		width: 600,
@@ -172,6 +179,7 @@ const authenticateUser = (afterOpen) => {
 		accessToken = accessToken.split('&scope=')[0];
 		setUserData(accessToken);
 		authenticationWindow.close();
+		current_window_count--;
 	});
 }
 

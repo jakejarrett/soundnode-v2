@@ -97,9 +97,10 @@ interface ComponentProps {
 	entity: Track | Playlist | TrackRepost | PlaylistRepost;
 	onClickPlay: (entity: Track | Playlist | TrackRepost | PlaylistRepost) => void;
 	currentlyPlayingId?: string;
+	isCurrentlyPlaying: boolean;
 }
 
-export const Song: React.FC<ComponentProps> = ({ entity, onClickPlay, currentlyPlayingId }) => {
+export const Song: React.FC<ComponentProps> = ({ entity, onClickPlay, currentlyPlayingId, isCurrentlyPlaying }) => {
 	const artwork: string = entity.type === 'track' || entity.type === 'track-repost' ?
 		entity.track.artwork_url || entity.track.user.avatar_url :
 		entity.playlist.artwork_url || entity.playlist.tracks[0].artwork_url;
@@ -112,7 +113,7 @@ export const Song: React.FC<ComponentProps> = ({ entity, onClickPlay, currentlyP
 		<SongComponent key={entity.uuid}>
 			<Artwork style={{ backgroundImage: `url(${artwork == null ? '' : artwork.replace('-large.', '-t200x200.')})` }}>
 				<SongCover onClick={e => onClickPlay(entity)} className={currentlyPlayingId === entity.uuid ? 'active' : ''}>
-					{currentlyPlayingId === entity.uuid ? <IoIosPause size="3rem" /> : <IoIosPlay size="3rem" />}
+					{currentlyPlayingId === entity.uuid && isCurrentlyPlaying ? <IoIosPause size="3rem" /> : <IoIosPlay size="3rem" />}
 				</SongCover>
 			</Artwork>
 			<SongTitle>

@@ -13,9 +13,10 @@ const Container = styled.div({
 interface ComponentProps {
     onPlay: (entity: Track | Playlist | TrackRepost | PlaylistRepost) => void;
     currentlyPlayingId?: string;
+    isCurrentlyPlaying: boolean;
 }
 
-export const Stream: React.FC<ComponentProps> = ({ onPlay, currentlyPlayingId }) => {
+export const Stream: React.FC<ComponentProps> = ({ onPlay, currentlyPlayingId, isCurrentlyPlaying }) => {
     const soundcloud = useSoundCloud();
     const [streamResponse, setStreamResponse] = React.useState<StreamResponse | null>(null);
     const ids = streamResponse == null ? [] : streamResponse.collection.map(entity => entity.type === 'track' || entity.type === 'track-repost' ? entity.track.id : entity.playlist.id);
@@ -42,7 +43,7 @@ export const Stream: React.FC<ComponentProps> = ({ onPlay, currentlyPlayingId })
                         return true;
                     }
                     return false;
-                }).map(entity => <Song entity={entity} onClickPlay={onPlay} currentlyPlayingId={currentlyPlayingId} />)}
+                }).map(entity => <Song entity={entity} onClickPlay={onPlay} currentlyPlayingId={currentlyPlayingId} isCurrentlyPlaying={isCurrentlyPlaying} />)}
             </Container>
         </>
     )
