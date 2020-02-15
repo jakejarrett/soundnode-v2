@@ -1,11 +1,13 @@
 import React from 'react';
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import { useHotkeys } from 'react-hotkeys-hook';
 
 import { Track, Playlist, TrackRepost, PlaylistRepost, SoundCloudTrack, SoundCloud } from "../../util/Soundcloud";
 import { Headerbar } from '../Headerbar';
 import { Stream } from '../Stream';
 import { Navigation } from '../Navigation';
 import { Footer } from '../Footer';
+import { useQueue } from '../../hooks/useQueue';
 
 interface AudioState {
 	playing: boolean;
@@ -13,13 +15,38 @@ interface AudioState {
 	duration: number;
 }
 
+/**
+ * TODO: Clean up this component where possible. currently it's a massive mess.
+ */
 export const App: React.FC = () => {
 	const [audioState, setAudioState] = React.useState<AudioState>({ currentTime: 0, duration: 0, playing: false });
 	const [currentlyPlaying, setCurrentlyPlaying] = React.useState<SoundCloudTrack | null>(null);
 	const [currentlyPlayingId, setCurrentlyPlayingId] = React.useState<string | undefined>();
 	const audioRef = React.useRef<HTMLAudioElement | null>(null);
+	const [queue, actions] = useQueue();
+	const getIndex = () => {
+		let queueIndex: number | undefined;
+		if (queue != null) {
+			for (const index in queue) {
+				if (queue[index].uuid === currentlyPlayingId) {
+					queueIndex = +index;
+				}
+			}
+		}
+		return queueIndex;
+	}
 	const getNextSong = () => {
 		console.log('next song needed');
+		if (queue != null) {
+
+			const index = getIndex();
+
+			if (index != null) {
+				const next = queue[index + 1];
+
+				// actions.setQueue()
+			}
+		}
 	}
 	const onPlay = (entity: Track | Playlist | TrackRepost | PlaylistRepost) => {
 		if (entity.uuid === currentlyPlayingId) {
@@ -69,11 +96,46 @@ export const App: React.FC = () => {
 				console.error(err);
 			});
 		}
-	}
+	};
+
+	useHotkeys('ctrl+right', () => {
+		console.log('yea');
+	});
+
+	useHotkeys('space', (event: KeyboardEvent) => {
+		event.preventDefault();
+
+		if (!!currentlyPlaying) {
+			const isPlaying = audioState.playing;
+
+			setAudioState({ ...audioState, playing: !isPlaying });
+
+			if (audioRef.current) {
+				if (isPlaying) {
+					audioRef.current.pause();
+				} else {
+					audioRef.current.play();
+				}
+			}
+
+			return;
+		}
+	}, [audioState]);
 
 	React.useEffect(() => {
-		console.log(currentlyPlaying);
+		if (currentlyPlaying != null) {
+			console.log(queue);
+			getNextSong();
+
+		}
 	}, [currentlyPlaying]);
+
+	// console.log(queue);
+
+	// React.useEffect(() => {
+	// 	console.log(queue);
+	// }, [queue]);
+
 	return (
 		<>
 			<Headerbar />

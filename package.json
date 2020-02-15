@@ -14,7 +14,7 @@
     "@types/react-dom": "^16.9.0",
     "approximate-number": "^2.0.0",
     "axios": "^0.19.2",
-    "electron": "^7.1.10",
+    "electron": "^8.0.1",
     "electron-is-dev": "^1.1.0",
     "electron-window-state": "^5.0.3",
     "enzyme": "^3.11.0",
@@ -38,7 +38,8 @@
     "electron-dev": "concurrently \"BROWSER=none yarn start\" \"wait-on http://localhost:3000 && electron .\" --kill-others --success",
     "postinstall": "electron-builder install-app-deps",
     "preelectron-pack": "yarn build",
-    "electron-pack": "build -mwl"
+    "electron-pack": "build -mwl",
+    "electron": "electron ."
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -63,11 +64,13 @@
     "@types/mkdirp": "^0.5.2",
     "@types/react-router-dom": "^5.1.3",
     "@types/styled-components": "^4.4.2",
+    "@types/use-global-hook": "^0.1.2",
     "@types/user-home": "^2.0.0",
     "babel-plugin-styled-components": "^1.10.6",
     "concurrently": "^5.0.2",
     "electron-builder": "^22.2.0",
     "react-hotkeys-hook": "^1.5.4",
+    "use-global-hook": "^0.1.12",
     "wait-on": "^4.0.0"
   }
 }

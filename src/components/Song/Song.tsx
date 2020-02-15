@@ -110,7 +110,7 @@ export const Song: React.FC<ComponentProps> = ({ entity, onClickPlay, currentlyP
 		`${entity.playlist.title} (${entity.playlist.user.username})`
 
 	return (
-		<SongComponent key={entity.uuid}>
+		<SongComponent key={entity.uuid} onContextMenu={e => console.log(entity)}>
 			<Artwork style={{ backgroundImage: `url(${artwork == null ? '' : artwork.replace('-large.', '-t200x200.')})` }}>
 				<SongCover onClick={e => onClickPlay(entity)} className={currentlyPlayingId === entity.uuid ? 'active' : ''}>
 					{currentlyPlayingId === entity.uuid && isCurrentlyPlaying ? <IoIosPause size="3rem" /> : <IoIosPlay size="3rem" />}

@@ -1644,6 +1644,11 @@
     "@types/react-dom" "*"
     "@types/testing-library__dom" "*"
 
+"@types/use-global-hook@^0.1.2":
+  version "0.1.2"
+  resolved "https://registry.yarnpkg.com/@types/use-global-hook/-/use-global-hook-0.1.2.tgz#1608345dfec6863ad6b546d5501f42dd5dc843a0"
+  integrity sha512-9sw7j/OeU0GEyvdpzmzPW4WIhPEpeFuqCJ+C1YRbz6uHYyJ6ssydb3GO/d5Bqf8fn56AvmsBL42P1KhJbNTJ6w==
+
 "@types/user-home@^2.0.0":
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/@types/user-home/-/user-home-2.0.0.tgz#17d49bd734f5826c6f7f06ac4b2ef59162fe6583"
@@ -4317,10 +4322,10 @@ electron-window-state@^5.0.3:
     jsonfile "^4.0.0"
     mkdirp "^0.5.1"
 
-electron@^7.1.10:
-  version "7.1.11"
-  resolved "https://registry.yarnpkg.com/electron/-/electron-7.1.11.tgz#3a95e35804af083d58b590513afea5e2290c4b66"
-  integrity sha512-YDXfnovKY+8iZ5ISQh1kRqYIRKbpOSxGXCx2WVxPFPutEQ7Q/Xzr3h4GePEY25/NXMytMfhKaAZAYjtWUm3r9Q==
+electron@^8.0.1:
+  version "8.0.1"
+  resolved "https://registry.yarnpkg.com/electron/-/electron-8.0.1.tgz#7f5070a1625f423cddcece25a1eb9e6d2f1339fb"
+  integrity sha512-kLZAQkbrAFNjQVpcHJUnjRYQNafuuWKnsdxzag5do1ewMqN0J4Pi/hPE27+5/1YAFMcbvCrPqhWIpcMsi8mKXQ==
   dependencies:
     "@electron/get" "^1.0.1"
     "@types/node" "^12.0.12"
@@ -11517,6 +11522,11 @@ url@^0.11.0:
   dependencies:
     punycode "1.3.2"
     querystring "0.2.0"
+
+use-global-hook@^0.1.12:
+  version "0.1.12"
+  resolved "https://registry.yarnpkg.com/use-global-hook/-/use-global-hook-0.1.12.tgz#3db747ca78e5bd1a007af176ad338f72293e730f"
+  integrity sha512-KhsWfDaa4jXgGHKDSxmBP0GjnIs5ad12y1vhl5mGBDcIiFfj3oB9vdfZZZCCPlZ14gI+tjCKZtb82+bPEwj3Iw==
 
 use@^3.1.0:
   version "3.1.1"
