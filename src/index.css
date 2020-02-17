@@ -15,7 +15,7 @@
 	--transition-instant-value: all 0.1s ease-out;
 	--disabled-color: rgba(255, 255, 255, 0.3);
 	
-	--footer-background: #000000;
+	--footer-background: #111111;
 	--footer-height: 64px;
 
 	/** Navigation */
@@ -89,6 +89,7 @@ code {
 .react-contextmenu-item {
 	padding: 15px 20px;
 	cursor: pointer;
+	font-size: 0.9rem;
 }
 
 .react-contextmenu-item:hover {
@@ -100,5 +101,6 @@ code {
 	background: transparent;
 	outline: none;
 	border: none;
-	border-top: 1px solid rgba(255, 255, 255, 0.1);
+	border-top: 1px solid var(--separator-clean-color);
+	margin: 5px 0;
 }

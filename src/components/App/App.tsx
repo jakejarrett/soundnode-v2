@@ -152,7 +152,7 @@ export const App: React.FC = () => {
 
 					</div>
 				</Router>
-				<Footer currentTime={audioState.currentTime} track={currentlyPlaying} trackLength={audioState.duration} />
+				<Footer track={currentlyPlaying} trackLength={audioState.duration} audioState={audioState} />
 				<audio
 					ref={audioRef}
 					src={currentlyPlaying && `${currentlyPlaying.stream_url}` || ''}
