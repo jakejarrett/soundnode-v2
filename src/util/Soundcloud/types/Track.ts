@@ -95,7 +95,8 @@ export interface SoundCloudTrack {
     policy: string
     key_signature: string
     isrc: string | null
-    uri: string
+    uri: string;
+    urn: string;
     download_count: number
     likes_count: number
     purchase_title: string

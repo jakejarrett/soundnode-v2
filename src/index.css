@@ -78,3 +78,27 @@ code {
 .window-actions-container {
 	max-width: 160px;
 }
+
+.react-contextmenu--visible {
+	background: var(--section-background);
+	border-radius: 10px;
+	z-index: 5;
+	overflow: hidden;
+}
+
+.react-contextmenu-item {
+	padding: 15px 20px;
+	cursor: pointer;
+}
+
+.react-contextmenu-item:hover {
+	color: var(--soundcloud-orange);
+	background: rgba(0, 0, 0, 1);
+}
+
+.react-contextmenu hr {
+	background: transparent;
+	outline: none;
+	border: none;
+	border-top: 1px solid rgba(255, 255, 255, 0.1);
+}

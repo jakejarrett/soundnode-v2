@@ -43,4 +43,5 @@ export interface SoundCloudPlaylist {
     user: SoundCloudUserMini
     embeddable_by: string
     label_id: string | null
+    urn: string
 }
