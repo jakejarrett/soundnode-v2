@@ -115,7 +115,7 @@ export const Song: React.FC<ComponentProps> = ({ entity, onClickPlay, currentlyP
 	const urn = entity.type === 'track' || entity.type === 'track-repost' ? entity.track.urn : entity.playlist.uri;
 
 	return (
-		<div>
+		<div style={{ position: 'relative' }}>
 			<ContextMenuTrigger id={title}>
 				<SongComponent key={entity.uuid} onContextMenu={e => console.log(entity)}>
 					<Artwork style={{ backgroundImage: `url(${artwork == null ? '' : artwork.replace('-large.', '-t200x200.')})` }}>
