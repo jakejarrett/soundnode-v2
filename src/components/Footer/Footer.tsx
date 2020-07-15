@@ -125,6 +125,7 @@ const Artist = styled.p({
 
 const Song = styled.p({
   margin: "0 0 0",
+  fontSize: `var(--font-small)`,
 });
 
 const ProgressControlsContainer = styled.div({
