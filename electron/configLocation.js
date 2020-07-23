@@ -5,11 +5,15 @@ const mkdirp = require('mkdirp');
 const configuration = {
 
     createUserConfig(userConfigPath) {
-        mkdirp(userConfigPath, err => {
-            if (err) {
-                console.error(err);
-            }
-        });
+        try {
+            mkdirp(userConfigPath, { mode: 0777 }, err => {
+                if (err) {
+                    console.error(err);
+                }
+            });
+        } catch (err) {
+            console.error(err);
+        }
     },
 
     createIfNotExist(path) {
