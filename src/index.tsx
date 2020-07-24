@@ -5,6 +5,7 @@ import { App } from './components';
 import * as serviceWorker from "./serviceWorker";
 import { NeoReact } from "./neoreact";
 import { Extension } from "./neoreact/src/core";
+import { Player } from "./components/Player";
 
 // If you want your app to work offline and load faster, you can change
 // unregister() to register() below. Note this comes with some pitfalls.
@@ -34,7 +35,14 @@ const conductor = new NeoReact<any>(
             sagas: []
           }
         },
-        zones: [],
+        zones: [
+            {
+                component: () => <Player />,
+                name: 'player',
+                order: 1,
+                target: "#player"
+            }
+        ],
         communicationMethod: "redux-saga",
         required: true
       },
