@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState } from "react";
 import { GtkTheme, GtkData } from "@jakejarrett/gtk-theme";
 
 const gtk = new GtkTheme({

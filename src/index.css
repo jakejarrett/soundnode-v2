@@ -87,8 +87,16 @@ code {
     monospace;
 }
 
-.window-actions-container {
+.window-actions-left {
   max-width: 160px;
+}
+
+.window-actions-right {
+  max-width: 110px;
+}
+
+.no-decorations-left {
+  margin-left: 160px;
 }
 
 .react-contextmenu--visible {
