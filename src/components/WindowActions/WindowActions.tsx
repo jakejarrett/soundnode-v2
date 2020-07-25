@@ -23,7 +23,9 @@ const Wrapper = styled.div({
   "-webkit-app-region": "no-drag",
 });
 
-interface ComponentProps {}
+interface ComponentProps {
+  decorations: "left" | "right";
+}
 
 const onClick = (action: "close" | "minimize" | "maximize" = "close") =>
   ipcRenderer.send("window-action-clicked", { action });
@@ -40,7 +42,7 @@ const defaultState: Colors = Object.freeze({
   maximize: "transparent",
 });
 
-export const WindowActions: React.FC<ComponentProps> = () => {
+export const WindowActions: React.FC<ComponentProps> = ({ decorations }) => {
   const [color, setColor] = React.useState<Colors>(defaultState);
   const [maximized, setMaximized] = React.useState<boolean>(false);
   const mouseIn = () => {
@@ -67,21 +69,45 @@ export const WindowActions: React.FC<ComponentProps> = () => {
 
   return (
     <Wrapper onMouseOver={mouseIn} onMouseOut={mouseOut}>
-      <Close onClick={() => onClick("close")}>
-        <IoIosClose color={color.close} size={"0.9em"} />
-      </Close>
+      {decorations === "left" && (
+        <>
+          <Close onClick={() => onClick("close")}>
+            <IoIosClose color={color.close} size={"0.9em"} />
+          </Close>
 
-      <Minimize onClick={() => onClick("minimize")}>
-        <IoIosRemove color={color.minimize} size={"0.9em"} />
-      </Minimize>
+          <Minimize onClick={() => onClick("minimize")}>
+            <IoIosRemove color={color.minimize} size={"0.9em"} />
+          </Minimize>
 
-      <Maximize onClick={() => onClick("maximize")}>
-        {maximized ? (
-          <IoIosContract color={color.maximize} size={"0.9em"} />
-        ) : (
-          <IoIosExpand color={color.maximize} size={"1em"} />
-        )}
-      </Maximize>
+          <Maximize onClick={() => onClick("maximize")}>
+            {maximized ? (
+              <IoIosContract color={color.maximize} size={"0.9em"} />
+            ) : (
+              <IoIosExpand color={color.maximize} size={"1em"} />
+            )}
+          </Maximize>
+        </>
+      )}
+
+      {decorations === "right" && (
+        <>
+          <Minimize onClick={() => onClick("minimize")}>
+            <IoIosRemove color={color.minimize} size={"0.9em"} />
+          </Minimize>
+
+          <Maximize onClick={() => onClick("maximize")}>
+            {maximized ? (
+              <IoIosContract color={color.maximize} size={"0.9em"} />
+            ) : (
+              <IoIosExpand color={color.maximize} size={"1em"} />
+            )}
+          </Maximize>
+
+          <Close onClick={() => onClick("close")}>
+            <IoIosClose color={color.close} size={"0.9em"} />
+          </Close>
+        </>
+      )}
     </Wrapper>
   );
 };

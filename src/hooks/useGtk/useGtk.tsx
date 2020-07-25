@@ -6,9 +6,11 @@ const gtk = new GtkTheme({
 });
 
 export const useGtk = () => {
-  const [soundcloud] = useState<GtkTheme>(gtk);
+  const [gtkTheme, setGtkTheme] = useState<GtkData>(gtk.getTheme());
 
-  return soundcloud;
+  gtk.on.themeChange = (data: GtkData) => setGtkTheme(data);
+
+  return [gtkTheme];
 };
 
 export const useGtkDecorations = () => {

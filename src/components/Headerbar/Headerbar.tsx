@@ -88,7 +88,7 @@ export const Headerbar: React.FC<ComponentProps> = () => {
     <HeaderbarOuter>
       {decorations === "left" && (
         <HeaderbarInner className="window-actions-left">
-          <WindowActions />
+          <WindowActions decorations={decorations} />
         </HeaderbarInner>
       )}
       <IconSearch
@@ -107,7 +107,7 @@ export const Headerbar: React.FC<ComponentProps> = () => {
       </HeaderbarInner>
       {decorations === "right" && (
         <HeaderbarInner className="window-actions-right">
-          <WindowActions />
+          <WindowActions decorations={decorations} />
         </HeaderbarInner>
       )}
     </HeaderbarOuter>
