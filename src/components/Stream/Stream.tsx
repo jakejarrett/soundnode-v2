@@ -42,13 +42,7 @@ export const Stream: React.FC<ComponentProps> = ({
             : entity.playlist.id
         );
   const unique = new Set(ids);
-  const tracks =
-    streamResponse != null
-      ? streamResponse.collection.filter((entity) =>
-          entity.type.includes("track")
-        )
-      : [];
-  const [queue, actions] = useQueue();
+  const [_, actions] = useQueue();
 
   React.useEffect(() => {
     soundcloud.stream.get().then((res) => {

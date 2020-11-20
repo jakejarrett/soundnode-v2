@@ -5,6 +5,7 @@ import { User } from "../User";
 import { IoIosArrowForward, IoIosArrowBack } from "react-icons/io";
 import { SoundCloud } from "../../util/Soundcloud";
 import { useGtkDecorations } from "../../hooks/useGtk/useGtk";
+import { useNavigate } from "react-router-dom";
 
 const HeaderbarOuter = styled.div({
   display: "flex",
@@ -70,7 +71,8 @@ const get = async (url: string) => {
 };
 
 export const Headerbar: React.FC<ComponentProps> = () => {
-  const [decorations] = useGtkDecorations();
+  const decorations = useGtkDecorations();
+  const navigate = useNavigate();
   const handleOnChange = (ev: React.ChangeEvent<HTMLInputElement>) => {
     const value = ev.currentTarget.value;
 
@@ -81,6 +83,12 @@ export const Headerbar: React.FC<ComponentProps> = () => {
       get(`https://api.soundcloud.com/${split[1]}/${split[2]}`).then(
         console.log
       );
+    } else {
+      if (value !== '') {
+        navigate(`/search/${value}`)
+      } else {
+        navigate('/');
+      }
     }
   };
 

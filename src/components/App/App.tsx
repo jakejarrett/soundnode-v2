@@ -1,5 +1,5 @@
 import React from "react";
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import { useHotkeys } from "react-hotkeys-hook";
 import { hideMenu } from "react-contextmenu";
 
@@ -16,7 +16,8 @@ import { Stream } from "../Stream";
 import { Navigation } from "../Navigation";
 import { Footer } from "../Footer";
 import { useQueue } from "../../hooks/useQueue";
-import { useGtk } from "../../hooks/useGtk/useGtk";
+import { ErrorBoundary } from "../ErrorBoundary";
+import { SearchPage } from "../SearchPage";
 
 interface AudioState {
   playing: boolean;
@@ -28,12 +29,11 @@ interface AudioState {
  * TODO: Clean up this component where possible. currently it's a massive mess.
  */
 export const App: React.FC = () => {
-  const [gtk] = useGtk();
   const [audioState, setAudioState] = React.useState<AudioState>({ currentTime: 0, duration: 0, playing: false, });
   const [currentlyPlaying, setCurrentlyPlaying] = React.useState<SoundCloudTrack | null>(null);
   const [currentlyPlayingId, setCurrentlyPlayingId] = React.useState<string | undefined>();
   const audioRef = React.useRef<HTMLAudioElement | null>(null);
-  const [queue, actions] = useQueue();
+  const [queue] = useQueue();
   const getIndex = () => {
     let queueIndex: number | undefined;
     if (queue != null) {
@@ -45,18 +45,30 @@ export const App: React.FC = () => {
     }
     return queueIndex;
   };
-  const getNextSong = () => {
-    console.log("next song needed");
+
+  const goToNextSong = () => {
+    console.log(queue, getIndex());
     if (queue != null) {
       const index = getIndex();
 
       if (index != null) {
         const next = queue[index + 1];
-
-        // actions.setQueue()
+        onPlay(next);
       }
     }
   };
+
+  const goToPreviousSong = () => {
+    if (queue != null) {
+      const index = getIndex();
+
+      if (index != null) {
+        const next = queue[index - 1];
+        onPlay(next);
+      }
+    }
+  };
+
   const onPlay = (entity: Track | Playlist | TrackRepost | PlaylistRepost) => {
     if (entity.uuid === currentlyPlayingId) {
       const isPlaying = audioState.playing;
@@ -113,17 +125,17 @@ export const App: React.FC = () => {
     }
   };
 
-  useHotkeys("ctrl+right", () => {
-    if (queue != null) {
-      const index = getIndex();
-      console.log(index);
-
-      if (index != null) {
-        const next = queue[index + 1];
-        onPlay(next);
+  useHotkeys("ctrl+right", goToNextSong, [queue, getIndex]);
+  useHotkeys("ctrl+left", () => {
+    console.log();
+    if (audioState.currentTime >= 3) {
+      if (audioRef.current) {
+        audioRef.current.currentTime = 0;
       }
+    } else {
+      goToPreviousSong();
     }
-  }, [queue, getIndex]);
+  }, [queue, getIndex, audioState]);
 
   useHotkeys("right", () => {
     if (!!currentlyPlaying) {
@@ -195,39 +207,34 @@ export const App: React.FC = () => {
     };
   }, []);
 
-  React.useEffect(() => {
-    if (currentlyPlaying != null) {
-      console.log(queue);
-      getNextSong();
-    }
-  }, [currentlyPlaying]);
-
-  // React.useEffect(() => {
-  // }, [gtk]);
-  
-  console.log(gtk.layout.buttons);
   return (
     <>
-      <Headerbar />
       <div>
         <Router>
+          <Headerbar />
           <Navigation />
           <div>
-            <Switch>
-              <Route exact path="/">
+          <ErrorBoundary>
+					  <Routes>
+              <Route path="/" element={
                 <Stream
                   onPlay={onPlay}
                   currentlyPlayingId={currentlyPlayingId}
                   isCurrentlyPlaying={audioState.playing}
                 />
-              </Route>
-            </Switch>
+
+              } />
+              <Route path="/search/:query" element={<SearchPage />} />
+            </Routes>
+            </ErrorBoundary>
           </div>
         </Router>
         <Footer
           track={currentlyPlaying}
           trackLength={audioState.duration}
           audioState={audioState}
+          onRequestNext={goToNextSong}
+          onRequestPrevious={goToPreviousSong}
         />
         <audio
           ref={audioRef}
@@ -242,7 +249,7 @@ export const App: React.FC = () => {
           onDurationChange={(e) =>
             setAudioState({ ...audioState, duration: e.currentTarget.duration })
           }
-          onEnded={(e) => getNextSong()}
+          onEnded={(e) => goToNextSong()}
         />
       </div>
     </>

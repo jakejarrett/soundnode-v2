@@ -122,8 +122,8 @@ interface ComponentProps {
 
 export const Song: React.FC<ComponentProps> = ({ entity, onClickPlay, currentlyPlayingId, isCurrentlyPlaying }) => {
 	const artwork: string = entity.type === 'track' || entity.type === 'track-repost' ?
-		entity.track.artwork_url || entity.track.user.avatar_url :
-		entity.playlist.artwork_url || entity.playlist.tracks[0].artwork_url;
+		entity.track?.artwork_url || entity.track.user.avatar_url :
+		entity.playlist?.artwork_url || entity.playlist.tracks[0]?.artwork_url || entity.playlist.user.avatar_url;
 	const isRepost = entity.type.includes('repost');
 	const title = entity.type === 'track' || entity.type === 'track-repost' ?
 		`${entity.track.title} - ${entity.track.user.username}` :

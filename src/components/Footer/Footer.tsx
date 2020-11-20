@@ -17,6 +17,8 @@ export interface ComponentProps {
     duration: number;
     playing: boolean;
   };
+  onRequestNext: () => void;
+  onRequestPrevious: () => void;
 }
 
 const FooterWrapper = styled.div({
@@ -71,6 +73,14 @@ const Artwork = styled.img({
   marginRight: 10,
   maxWidth: 64,
   maxHeight: 64,
+  transition: 'transform 0.3s ease-in-out',
+  transformOrigin: 'bottom left',
+  zIndex: 3,
+
+  // TODO: Mouse down "Zoom to see better"
+  // '&:hover': {
+  //   transform: "scale(3)"
+  // }
 });
 
 const ProgressContainer = styled.div({
@@ -112,7 +122,7 @@ const TrackDetails = styled.div({
   flexWrap: "wrap",
 
   "& > p": {
-    textOverflow: "ellipses",
+    textOverflow: "ellipsis",
     whiteSpace: "nowrap",
     width: "100%",
   },
@@ -126,6 +136,8 @@ const Artist = styled.p({
 const Song = styled.p({
   margin: "0 0 0",
   fontSize: `var(--font-small)`,
+  overflow: 'hidden',
+  textOverflow: 'ellipsis'
 });
 
 const ProgressControlsContainer = styled.div({
@@ -146,6 +158,8 @@ export const Footer: React.FC<ComponentProps> = ({
   audioState,
   trackLength,
   track,
+  onRequestNext,
+  onRequestPrevious,
 }) => (
   <FooterWrapper>
     <ArtworkAndTrackDetailsContainer>
@@ -167,13 +181,13 @@ export const Footer: React.FC<ComponentProps> = ({
     </ArtworkAndTrackDetailsContainer>
     <ProgressContainer>
       <ControlsContainer>
-        <IoIosSkipBackward size={"1.3rem"} />
+        <IoIosSkipBackward size={"1.3rem"} onClick={onRequestPrevious} />
         {audioState.playing ? (
           <IoIosPause size={"1.3rem"} />
         ) : (
           <IoIosPlay size={"1.3rem"} />
         )}
-        <IoIosSkipForward size={"1.3rem"} />
+        <IoIosSkipForward size={"1.3rem"} onClick={onRequestNext} />
       </ControlsContainer>
       <ProgressControlsContainer>
         <p>

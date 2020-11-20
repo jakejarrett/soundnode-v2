@@ -10,7 +10,7 @@ export const useGtk = () => {
 
   gtk.on.themeChange = (data: GtkData) => setGtkTheme(data);
 
-  return [gtkTheme];
+  return gtkTheme;
 };
 
 export const useGtkDecorations = () => {
@@ -18,5 +18,5 @@ export const useGtkDecorations = () => {
 
   gtk.on.layoutChange = (data: GtkData) => setDecorations(data.layout.buttons);
 
-  return [gtkDecorations];
+  return gtkDecorations;
 };

@@ -10,7 +10,7 @@ export const secondsToTime = (seconds: number) => {
 	let hour = '';
 
 
-	if (hours != 0) {
+	if (hours !== 0) {
 		hour = `${pad(hours)}:`;
 	}
 
@@ -19,6 +19,6 @@ export const secondsToTime = (seconds: number) => {
 		mins,
 		secs,
 		rendered: `${hour}${pad(realmin)}:${(secs > 9 ? secs : '0' + secs)}`,
-		playlistRender: `${hour != '0' ? `${pad(hours)} hr` : ''} ${realmin} min`
+		playlistRender: `${hour !== '0' ? `${pad(hours)} hr` : ''} ${realmin} min`
 	}
 };
