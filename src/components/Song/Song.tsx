@@ -6,6 +6,7 @@ import styled from "styled-components";
 import approximateNumber from 'approximate-number';
 import { ContextMenu, MenuItem, ContextMenuTrigger } from "react-contextmenu";
 import { clipboard, shell } from 'electron';
+import { secondsToTime } from '../../util/secondsToTime';
 
 const SongComponent = styled.div({
 	width: `calc(280px - 20px)`,
@@ -24,7 +25,7 @@ const Artwork = styled.div({
 	height: 260,
 	backgroundPosition: 'center',
 	backgroundRepeat: 'no-repeat',
-	backgroundSize: 'contain'
+	backgroundSize: 'contain',
 });
 
 const SongTitle = styled.div({
@@ -97,7 +98,20 @@ const SongCover = styled.div({
 
 const PlaybackStats = styled.p({
 	marginRight: 10,
-})
+});
+
+const DurationContainer = styled.p({
+	position: 'absolute',
+	bottom: 5,
+	left: 5,
+	margin: 0,
+	background: 'rgba(0, 0, 0, 0.8)',
+	padding: 10,
+	borderRadius: 10,
+	backdropFilter: 'blur(10px)',
+	fontWeight: 'bold',
+	fontSize: '0.9rem'
+});
 
 interface ComponentProps {
 	entity: Track | Playlist | TrackRepost | PlaylistRepost;
@@ -121,11 +135,14 @@ export const Song: React.FC<ComponentProps> = ({ entity, onClickPlay, currentlyP
 	return (
 		<div style={{ position: 'relative' }}>
 			<ContextMenuTrigger id={title}>
-				<SongComponent key={entity.uuid} onContextMenu={e => console.log(entity)}>
+				<SongComponent key={entity.uuid}>
 					<Artwork style={{ backgroundImage: `url(${artwork == null ? '' : artwork.replace('-large.', '-t200x200.')})` }}>
 						<SongCover onClick={e => onClickPlay(entity)} className={currentlyPlayingId === entity.uuid ? 'active' : ''}>
 							{currentlyPlayingId === entity.uuid && isCurrentlyPlaying ? <IoIosPause size="3rem" /> : <IoIosPlay size="3rem" />}
 						</SongCover>
+						<DurationContainer>
+							{secondsToTime((entity.type === "track" || entity.type === "track-repost" ? entity.track.duration : entity.playlist.duration) / 1000).rendered}
+						</DurationContainer>
 					</Artwork>
 					<SongTitle>
 						<p title={title}>{title}</p>

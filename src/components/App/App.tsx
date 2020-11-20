@@ -183,12 +183,14 @@ export const App: React.FC = () => {
     if (el != null) {
       el.addEventListener("scroll", listener);
       document.addEventListener("resize", listener);
+      window.addEventListener('blur', listener);
     }
 
     return () => {
       if (el != null) {
         el.removeEventListener("scroll", listener);
         document.removeEventListener("resize", listener);
+        window.removeEventListener('blur', listener);
       }
     };
   }, []);
@@ -200,14 +202,10 @@ export const App: React.FC = () => {
     }
   }, [currentlyPlaying]);
 
-  // console.log(queue);
-
-  React.useEffect(() => {
-  	console.log(queue);
-  }, [queue]);
-
-  console.log(gtk);
-
+  // React.useEffect(() => {
+  // }, [gtk]);
+  
+  console.log(gtk.layout.buttons);
   return (
     <>
       <Headerbar />
