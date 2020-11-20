@@ -1,7 +1,10 @@
 import React from "react";
 import ReactDOM from "react-dom";
+import { createStore, applyMiddleware } from "redux";
+import createSagaMiddleware from "redux-saga";
+
 import "./index.css";
-import { App } from './components';
+import { App } from "./components";
 import * as serviceWorker from "./serviceWorker";
 import { NeoReact } from "./neoreact";
 import { Extension } from "./neoreact/src/core";
@@ -18,9 +21,14 @@ const SagaSupport: Extension = {
   lifecycleDesired: "pre-creation",
   type: "stateHandler",
   func: (instance: any) => {
-    instance.stateHandler = (state: any[]) =>
-      state.filter(({ type }) => type === "redux-saga");
-  }
+    instance.stateHandler = (state: any[]) => {
+      const filters = state.filter(({ type }) => type === "redux-saga");
+
+      console.log(filters);
+
+      return filters;
+    };
+  },
 };
 
 const conductor = new NeoReact<any>(
@@ -32,28 +40,28 @@ const conductor = new NeoReact<any>(
           type: "redux-saga",
           props: {
             reducers: [],
-            sagas: []
-          }
+            sagas: [SagaSupport],
+          },
         },
         zones: [
-            {
-                component: () => <Player />,
-                name: 'player',
-                order: 1,
-                target: "#player"
-            }
+          {
+            component: () => <Player />,
+            name: "player",
+            order: 1,
+            target: "#player",
+          },
         ],
         communicationMethod: "redux-saga",
-        required: true
+        required: true,
       },
     ],
     target: "#root",
     extensions: {
-      reduxSaga: SagaSupport
+      reduxSaga: SagaSupport,
     },
     // Maybe?
     debug: true,
-    component: <App />
+    component: <App />,
   },
   ReactDOM.render
 );

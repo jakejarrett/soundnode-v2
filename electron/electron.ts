@@ -119,12 +119,12 @@ electron.ipcMain.on("window-action-clicked", (event, { action }) => {
 
 electron.ipcMain.on("logout", () => {
   removeSync(configuration.getPath());
-  authenticateUser(() => {
-    if (mainWindow != null) {
+  if (mainWindow != null) {
+    authenticateUser(() => {
       mainWindow.close();
       mainWindow = null;
-    }
-  });
+    });
+  }
 });
 
 /**
