@@ -15,7 +15,7 @@
     "@types/react-dom": "^16.9.0",
     "approximate-number": "^2.0.0",
     "axios": "^0.19.2",
-    "electron": "^8.2.4",
+    "electron": "^8.5.2",
     "electron-is-dev": "^1.1.0",
     "electron-window-state": "^5.0.3",
     "enzyme": "^3.11.0",
