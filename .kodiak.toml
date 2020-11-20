@@ -1,0 +1,28 @@
+# .kodiak.toml
+# Minimal config. version is the only required field.
+version = 1
+
+
+[merge.message]
+# default: "github_default"
+title = "pull_request_title"
+# default: "github_default"
+body = "pull_request_body"
+
+# add the PR number to the merge commit title, like GitHub.
+include_pr_number = true # default: true
+
+# use the default markdown content of the PR for the merge commit.
+body_type = "markdown" # default: "markdown"
+
+# remove html comments to auto remove PR templates.
+strip_html_comments = true # default: false
+
+[merge]
+# Automatic merges blocked if *WIP is detected.
+blockingTitleRegex = "\bwip\b"
+notify_on_conflict = true
+
+[update]
+# immediately update a pull request's branch when outdated.
+always = true # default: false

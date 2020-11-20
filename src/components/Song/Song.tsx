@@ -95,6 +95,10 @@ const SongCover = styled.div({
 	},
 });
 
+const PlaybackStats = styled.p({
+	marginRight: 10,
+})
+
 interface ComponentProps {
 	entity: Track | Playlist | TrackRepost | PlaylistRepost;
 	onClickPlay: (entity: Track | Playlist | TrackRepost | PlaylistRepost) => void;
@@ -133,13 +137,13 @@ export const Song: React.FC<ComponentProps> = ({ entity, onClickPlay, currentlyP
 					<SongStats>
 						{entity.type === 'track' || entity.type === 'track-repost' ? (
 							<>
-								<p title={`${entity.track.playback_count} Plays`}>
+								<PlaybackStats title={`${entity.track.playback_count} Plays`}>
 									<IoIosPlay size="1.2rem" color="var(--soundcloud-orange)" />
 									{approximateNumber(entity.track.playback_count, {
 										round: true,
 										capital: true
 									})}
-								</p>
+								</PlaybackStats>
 								<p title={`${entity.track.likes_count} Likes`}>
 									<IoIosHeart size="1.2rem" color="var(--soundcloud-orange)" />
 									{approximateNumber(entity.track.likes_count, {
@@ -149,13 +153,13 @@ export const Song: React.FC<ComponentProps> = ({ entity, onClickPlay, currentlyP
 								</p>
 							</>
 						) : <>
-								<p title={`${entity.playlist.track_count} Tracks in playlist`}>
+								<PlaybackStats title={`${entity.playlist.track_count} Tracks in playlist`}>
 									<MdPlaylistPlay size="1.2rem" color="var(--soundcloud-orange)" />
 									{approximateNumber(entity.playlist.track_count, {
 										round: true,
 										capital: true
 									})}
-								</p>
+								</PlaybackStats>
 								<p title={`${entity.playlist.likes_count} Likes`}>
 									<IoIosHeart size="1.2rem" color="var(--soundcloud-orange)" />
 									{approximateNumber(entity.playlist.likes_count, {

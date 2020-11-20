@@ -29,18 +29,9 @@ interface AudioState {
  */
 export const App: React.FC = () => {
   const [gtk] = useGtk();
-  const [audioState, setAudioState] = React.useState<AudioState>({
-    currentTime: 0,
-    duration: 0,
-    playing: false,
-  });
-  const [
-    currentlyPlaying,
-    setCurrentlyPlaying,
-  ] = React.useState<SoundCloudTrack | null>(null);
-  const [currentlyPlayingId, setCurrentlyPlayingId] = React.useState<
-    string | undefined
-  >();
+  const [audioState, setAudioState] = React.useState<AudioState>({ currentTime: 0, duration: 0, playing: false, });
+  const [currentlyPlaying, setCurrentlyPlaying] = React.useState<SoundCloudTrack | null>(null);
+  const [currentlyPlayingId, setCurrentlyPlayingId] = React.useState<string | undefined>();
   const audioRef = React.useRef<HTMLAudioElement | null>(null);
   const [queue, actions] = useQueue();
   const getIndex = () => {
@@ -123,8 +114,44 @@ export const App: React.FC = () => {
   };
 
   useHotkeys("ctrl+right", () => {
-    console.log("yea");
-  });
+    if (queue != null) {
+      const index = getIndex();
+      console.log(index);
+
+      if (index != null) {
+        const next = queue[index + 1];
+        onPlay(next);
+      }
+    }
+  }, [queue, getIndex]);
+
+  useHotkeys("right", () => {
+    if (!!currentlyPlaying) {
+      const currentTime = audioState.currentTime + 5;
+
+      setAudioState({ ...audioState, currentTime });
+
+      if (audioRef.current) {
+        audioRef.current.currentTime = currentTime
+      }
+
+      return;
+    }
+  }, [audioState]);
+
+  useHotkeys("left", () => {
+    if (!!currentlyPlaying) {
+      const currentTime = audioState.currentTime - 5;
+
+      setAudioState({ ...audioState, currentTime });
+
+      if (audioRef.current) {
+        audioRef.current.currentTime = currentTime
+      }
+
+      return;
+    }
+  }, [audioState]);
 
   useHotkeys(
     "space",
@@ -175,9 +202,9 @@ export const App: React.FC = () => {
 
   // console.log(queue);
 
-  // React.useEffect(() => {
-  // 	console.log(queue);
-  // }, [queue]);
+  React.useEffect(() => {
+  	console.log(queue);
+  }, [queue]);
 
   console.log(gtk);
 
