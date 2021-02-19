@@ -68,20 +68,22 @@ const CircleIndicator = styled.div({
   borderRadius: "100%",
 });
 
-const Artwork = styled.img({
-  height: `var(--footer-height)`,
-  marginRight: 10,
-  maxWidth: 64,
-  maxHeight: 64,
-  transition: 'transform 0.3s ease-in-out',
-  transformOrigin: 'bottom left',
-  zIndex: 3,
+const Artwork = styled.div<{ source: string; }>`
 
-  // TODO: Mouse down "Zoom to see better"
-  // '&:hover': {
-  //   transform: "scale(3)"
-  // }
-});
+  height: var(--footer-height);
+  margin-right: 10px;
+  max-width: var(--footer-height);
+  max-height: var(--footer-height);
+  width: var(--footer-height);
+  transition: transform 0.3s ease-in-out;
+  transform-origin: bottom left;
+  z-index: 3;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-image: url(${({ source }) => source});
+  background-position: center;
+
+`;
 
 const ProgressContainer = styled.div({
   display: "block",
@@ -164,11 +166,7 @@ export const Footer: React.FC<ComponentProps> = ({
   <FooterWrapper>
     <ArtworkAndTrackDetailsContainer>
       <Artwork
-        src={
-          track
-            ? track.artwork_url
-            : "https://i.ytimg.com/vi/E3ncmDuV0m0/maxresdefault.jpg"
-        }
+        source={track ? track.artwork_url : "https://i.ytimg.com/vi/E3ncmDuV0m0/maxresdefault.jpg"}
       />
       <TrackDetails>
         <Song>

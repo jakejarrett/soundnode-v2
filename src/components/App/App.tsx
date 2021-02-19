@@ -224,6 +224,7 @@ export const App: React.FC = () => {
                 />
 
               } />
+              <Route path="/discover" element={<h1>Discover</h1>} />
               <Route path="/search/:query" element={<SearchPage />} />
             </Routes>
             </ErrorBoundary>

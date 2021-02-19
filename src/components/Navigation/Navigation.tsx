@@ -39,6 +39,7 @@ export const Navigation: React.FC<{}> = () => {
         <Sidebar>
             <h5>Discover</h5>
             <Link to="/" className={window.location.pathname === '/' ? 'active' : ''}>Stream</Link>
+            <Link to="/discover" className={window.location.pathname === '/discover' ? 'active' : ''}>Discover</Link>
         </Sidebar>
     )
 };
