@@ -1,0 +1,8 @@
+# NOTE: This will only build for linux until they add in macos/windows arm support.
+# Docs for later;
+# https://docs.travis-ci.com/user/multi-cpu-architectures/
+# https://blog.travis-ci.com/2019-10-07-multi-cpu-architecture-support
+arch:
+  - amd64
+  - arm64
+os: linux  # different CPU architectures are only supported on Linux
