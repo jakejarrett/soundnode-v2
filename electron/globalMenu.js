@@ -1,4 +1,4 @@
-const { ipcMain, globalShortcut, Menu, Tray } = require('electron');
+const { app, ipcMain, globalShortcut, Menu, Tray } = require('electron');
 const { platform } = require("process");
 
 function initializeMediaShortcuts() {
@@ -98,9 +98,11 @@ const menuBar = () => {
 	];
 
 	const menu = Menu.buildFromTemplate(template);
-	Menu.setApplicationMenu(menu)
-
-	tray.setContextMenu(menu)
+	Menu.setApplicationMenu(menu)	
+	
+	app.whenReady().then(() => {
+		tray.setContextMenu(menu)
+	});
 
 }
 
