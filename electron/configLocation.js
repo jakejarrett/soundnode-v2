@@ -34,30 +34,8 @@ const configuration = {
      * @returns {string} The folder location of the config
      */
     getUserConfig() {
-        let userConfigPath = null;
-
-        /** Windows platform */
-        if (process.platform === 'win32') {
-            userConfigPath = `${userHome}/.config/Soundnode`;
-        }
-
-        /** Linux platforms - XDG Standard */
-        if (process.platform === 'linux') {
-            userConfigPath = `${userHome}/.config/Soundnode`;
-        }
-
-        /** Mac os configuration location */
-        if (process.platform === 'darwin') {
-            userConfigPath = `${userHome}/Library/Preferences/Soundnode`;
-        }
-
-        /** Unsupported platform */
-        if (userConfigPath === null) {
-            throw `could not set config path for this OS ${process.platform}`
-        }
-
+        const userConfigPath = process.platform === 'darwin' ? `${userHome}/Library/Preferences/Soundnode` : `${userHome}/.config/Soundnode`;
         this.createIfNotExist(userConfigPath)
-
         return userConfigPath;
     },
 
@@ -76,7 +54,7 @@ const configuration = {
      * @returns {Object} Parsed version of the saved file
      */
     getConfigfile() {
-        return JSON.parse(fs.readFileSync(`${this.getPath()}`, 'utf-8'));
+        return JSON.parse(fs.readFileSync(this.getPath(), 'utf-8'));
     },
 
     /**
@@ -85,7 +63,7 @@ const configuration = {
      * @returns {Boolean} True if the file exists
      */
     containsConfig() {
-        return fs.existsSync(`${this.getPath()}`);
+        return fs.existsSync(this.getPath());
     }
 
 }

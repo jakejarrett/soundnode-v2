@@ -132,7 +132,7 @@ const authenticateUser = (afterOpen) => {
 	let contents;
 	// todo: figure out how to deal with this.
 	// Sessions after 24 hours will log you out.
-	if (current_window_count > max_window_count) {
+	if (current_window_count > max_window_count && authenticationWindow != null) {
 		return;
 	}
 

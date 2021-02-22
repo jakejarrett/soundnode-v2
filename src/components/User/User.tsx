@@ -72,7 +72,10 @@ const ClickableDiv = styled.div({
 })
 
 export const User = () => {
-    const logout = () => ipcRenderer.send('logout');
+    const logout = (event: React.MouseEvent<HTMLParagraphElement, MouseEvent>) => {
+        event.stopPropagation();
+        ipcRenderer.send('logout');
+    };
     const soundcloud = useSoundCloud();
     const [user, setUser] = React.useState<SoundCloudUser | null>(null);
     const [dropdownShown, showDropdown] = React.useState<boolean>(false);
@@ -116,7 +119,7 @@ export const User = () => {
         </ClickableDiv>
 
         {dropdownShown ? (
-            <Dropdown ref={ref => dropdown.current = ref}>
+            <Dropdown ref={ref => dropdown.current = ref} style={{ zIndex: 1000 }}>
                 <p onClick={logout}>Logout</p>
 
             </Dropdown>

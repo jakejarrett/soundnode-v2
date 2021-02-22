@@ -140,15 +140,15 @@ export const Stream: FC<ComponentProps> = ({
           </p>
         }
         // below props only if you need pull down functionality
-        refreshFunction={() => console.log("refresh")}
-        pullDownToRefresh
-        pullDownToRefreshThreshold={50}
-        pullDownToRefreshContent={
-          <h3 style={{ textAlign: 'center' }}>&#8595; Pull down to refresh</h3>
-        }
-        releaseToRefreshContent={
-          <h3 style={{ textAlign: 'center' }}>&#8593; Release to refresh</h3>
-        }
+        // refreshFunction={() => console.log("refresh")}
+        // pullDownToRefresh
+        // pullDownToRefreshThreshold={50}
+        // pullDownToRefreshContent={
+        //   <h3 style={{ textAlign: 'center' }}>&#8595; Pull down to refresh</h3>
+        // }
+        // releaseToRefreshContent={
+        //   <h3 style={{ textAlign: 'center' }}>&#8593; Release to refresh</h3>
+        // }
         scrollableTarget="root"
       >
         {streamResponse.map((entity) => (

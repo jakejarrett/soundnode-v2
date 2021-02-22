@@ -1,6 +1,11 @@
-const { ipcMain, globalShortcut, Menu } = require('electron');
+const { ipcMain, globalShortcut, Menu, Tray } = require('electron');
+const { platform } = require("process");
 
 function initializeMediaShortcuts() {
+	if (platform === "linux") {
+		return;
+	}
+
 	globalShortcut.register('MediaPlayPause', () => {
 		mainWindow.webContents.send('MediaPlayPause');
 	});
@@ -19,10 +24,11 @@ function initializeMediaShortcuts() {
 }
 
 const menuBar = () => {
+	const tray = new Tray('/home/jake/dev/soundnode-app/app/soundnode.png')
 	const template = [
 		{
 			role: 'editMenu',
-			label: 'Soundnode'
+			label: 'Edit'
 		},
 		{
 			role: 'view',
@@ -93,6 +99,9 @@ const menuBar = () => {
 
 	const menu = Menu.buildFromTemplate(template);
 	Menu.setApplicationMenu(menu)
+
+	tray.setContextMenu(menu)
+
 }
 
 module.exports = {
