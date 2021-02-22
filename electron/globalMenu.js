@@ -101,6 +101,10 @@ const menuBar = () => {
 	Menu.setApplicationMenu(menu)	
 	
 	app.whenReady().then(() => {
+		/** TODO: Implement play/pause toggles etc. */
+		/**
+		 * TODO: Get IPC to send "track paused" etc so that we can show current state of "Play" and "Pause" in the tray.
+		 */
 		tray.setContextMenu(menu)
 	});
 
