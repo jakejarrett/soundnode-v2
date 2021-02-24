@@ -24,7 +24,6 @@ function initializeMediaShortcuts() {
 }
 
 const menuBar = () => {
-	const tray = new Tray('/home/jake/dev/soundnode-app/app/soundnode.png')
 	const template = [
 		{
 			role: 'editMenu',
@@ -98,15 +97,19 @@ const menuBar = () => {
 	];
 
 	const menu = Menu.buildFromTemplate(template);
-	Menu.setApplicationMenu(menu)	
+	Menu.setApplicationMenu(menu)
+
+	if (process.platform != "darwin") {
+		app.whenReady().then(() => {
+			const tray = new Tray('/home/jake/dev/soundnode-app/app/soundnode.png')
+			/** TODO: Implement play/pause toggles etc. */
+			/**
+			 * TODO: Get IPC to send "track paused" etc so that we can show current state of "Play" and "Pause" in the tray.
+			 */
+			tray.setContextMenu(menu)
+		});
+	}
 	
-	app.whenReady().then(() => {
-		/** TODO: Implement play/pause toggles etc. */
-		/**
-		 * TODO: Get IPC to send "track paused" etc so that we can show current state of "Play" and "Pause" in the tray.
-		 */
-		tray.setContextMenu(menu)
-	});
 
 }
 

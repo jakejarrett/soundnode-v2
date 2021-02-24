@@ -53,7 +53,8 @@ const createWindow = () => {
 		webPreferences: {
 			nodeIntegration: true,
 			webSecurity: false
-		}
+		},
+		backgroundColor: '#151515'
 	});
 
 	mainWindow.webContents.on('did-finish-load', () => {
@@ -78,7 +79,6 @@ const createWindow = () => {
 	mainWindow.on('unmaximize', () => {
 		mainWindow.webContents.send('maximize-change', false);
 	});
-
 
 	mainWindow.on('closed', () => mainWindow = null);
 
