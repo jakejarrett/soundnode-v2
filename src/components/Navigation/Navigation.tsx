@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 
 const Sidebar = styled.div({
     position: "fixed",
@@ -35,11 +35,13 @@ const Sidebar = styled.div({
 });
 
 export const Navigation: React.FC<{}> = () => {
+    const { pathname } = useLocation();
+
     return (
         <Sidebar>
             <h5>Discover</h5>
-            <Link to="/" className={window.location.pathname === '/' ? 'active' : ''}>Stream</Link>
-            <Link to="/discover" className={window.location.pathname === '/discover' ? 'active' : ''}>Discover</Link>
+            <Link to="/" className={pathname === '/' ? 'active' : ''}>Stream</Link>
+            <Link to="/discover" className={pathname === '/discover' ? 'active' : ''}>Discover</Link>
         </Sidebar>
     )
 };
