@@ -25,8 +25,9 @@ function initializeMediaShortcuts() {
 	});
 }
 
+/** TODO: Builds don't work w/ this yet. */
 const menuBar = () => {
-	console.log(assetsDir);
+	return;
 	const tray = new Tray(`${assetsDir}/images/soundnode.png`);
 	const template = [
 		{
