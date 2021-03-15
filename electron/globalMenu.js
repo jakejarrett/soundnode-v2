@@ -1,12 +1,14 @@
 const { app, ipcMain, globalShortcut, Menu, Tray } = require('electron');
 const { platform } = require("process");
+const { join } = require("path");
+const assetsDir = join(__dirname, '..', '/assets');
 
 function initializeMediaShortcuts() {
 	if (platform === "linux") {
 		return;
 	}
 
-	globalShortcut.register('MediaPlayPause', () => {
+	globalShortcut.register('MediaPlayPause', (e) => {
 		mainWindow.webContents.send('MediaPlayPause');
 	});
 
@@ -24,7 +26,8 @@ function initializeMediaShortcuts() {
 }
 
 const menuBar = () => {
-	const tray = new Tray('/home/jake/dev/soundnode-app/app/soundnode.png')
+	console.log(assetsDir);
+	const tray = new Tray(`${assetsDir}/images/soundnode.png`);
 	const template = [
 		{
 			role: 'editMenu',
