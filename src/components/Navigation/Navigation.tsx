@@ -34,19 +34,10 @@ const Sidebar = styled.div({
     }
 });
 
-const getActive = (path: string) => {
-    switch (path) {
-        case "/discover": {
-            return 
-        }
-    }
-}
-
 export const Navigation: React.FC<{}> = () => {
     const { pathname } = useLocation();
     const paths = ["discover", "search"];
     const potentials = paths.filter(path => path === pathname.split("/")[1]);
-    console.log(potentials)
 
     return (
         <Sidebar>
