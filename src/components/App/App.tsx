@@ -216,6 +216,14 @@ export const App: React.FC = () => {
           <div>
           <ErrorBoundary>
 					  <Routes>
+            <Route path="*" element={
+                <Stream
+                  onPlay={onPlay}
+                  currentlyPlayingId={currentlyPlayingId}
+                  isCurrentlyPlaying={audioState.playing}
+                />
+
+              } />
               <Route path="/" element={
                 <Stream
                   onPlay={onPlay}

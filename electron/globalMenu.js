@@ -1,12 +1,14 @@
 const { app, ipcMain, globalShortcut, Menu, Tray } = require('electron');
 const { platform } = require("process");
+const { join } = require("path");
+const assetsDir = join(__dirname, '..', '/assets');
 
 function initializeMediaShortcuts() {
 	if (platform === "linux") {
 		return;
 	}
 
-	globalShortcut.register('MediaPlayPause', () => {
+	globalShortcut.register('MediaPlayPause', (e) => {
 		mainWindow.webContents.send('MediaPlayPause');
 	});
 
@@ -23,7 +25,10 @@ function initializeMediaShortcuts() {
 	});
 }
 
+/** TODO: Builds don't work w/ this yet. */
 const menuBar = () => {
+	return;
+	const tray = new Tray(`${assetsDir}/images/soundnode.png`);
 	const template = [
 		{
 			role: 'editMenu',
@@ -109,8 +114,6 @@ const menuBar = () => {
 			tray.setContextMenu(menu)
 		});
 	}
-	
-
 }
 
 module.exports = {
