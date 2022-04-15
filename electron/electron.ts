@@ -61,13 +61,13 @@ const createWindow = () => {
 		mainWindow.setTitle('Soundnode');
 		mainWindow.show();
 		mainWindow.focus();
+		menuBar();
 	});
 
 	initializeMediaShortcuts();
-	menuBar();
-
+	
 	mainWindow.loadURL(url);
-
+	
 	if (isDev) {
 		mainWindow.webContents.openDevTools();
 	}

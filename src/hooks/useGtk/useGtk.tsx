@@ -1,14 +1,21 @@
 import { useState } from "react";
 import { GtkTheme, GtkData } from "@jakejarrett/gtk-theme";
+import { platform } from 'process';
 
-const gtk = new GtkTheme({
-  events: {},
-});
+let gtk: GtkTheme | undefined = undefined;
+
+if (platform === 'linux') {
+  gtk = new GtkTheme({
+    events: {},
+  });
+}
 
 export const useGtk = () => {
-  const [gtkTheme, setGtkTheme] = useState<GtkData>(gtk.getTheme());
+  const [gtkTheme, setGtkTheme] = useState<GtkData | undefined>(gtk?.getTheme());
 
-  gtk.on.themeChange = (data: GtkData) => setGtkTheme(data);
+  if (gtk) {
+    gtk.on.themeChange = (data: GtkData) => setGtkTheme(data);
+  }
 
   return gtkTheme;
 };
@@ -16,7 +23,9 @@ export const useGtk = () => {
 export const useGtkDecorations = () => {
   const [gtkDecorations, setDecorations] = useState<"left" | "right">("right");
 
-  gtk.on.layoutChange = (data: GtkData) => setDecorations(data.layout.buttons);
+  if (gtk) {
+    gtk.on.layoutChange = (data: GtkData) => setDecorations(data.layout.buttons);
+  }
 
   return gtkDecorations;
 };

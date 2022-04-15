@@ -20,6 +20,7 @@ export class API {
             .then(({ data }) => data)
             // Catch all unauthorized.
             .catch(err => {
+                console.log(err.response);
                 if (err.response.status === 401) {
                     ipcRenderer.send('logout');
                 }
