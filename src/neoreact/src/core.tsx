@@ -63,6 +63,7 @@ export interface NeoExtension {
   // This is only exposed to the extensions
   // This only supports ONE state handler. Do we want to support multiple?
   stateHandler?: (state: State<string, any>[]) => void;
+  utility: Array<() => void>;
 }
 
 export interface NeoReact<StateProps> {

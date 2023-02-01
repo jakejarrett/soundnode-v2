@@ -31,6 +31,13 @@ const SagaSupport: Extension = {
   },
 };
 
+const CustomLogger: Extension = {
+    name: "custom-logger",
+    lifecycleDesired: "pre-creation",
+    type: "utility",
+    func: (...values: any[]) => console.log("Custom logger", ...values),
+  };
+
 const conductor = new NeoReact<any>(
   {
     services: [
@@ -45,7 +52,7 @@ const conductor = new NeoReact<any>(
         },
         zones: [
           {
-            component: () => <Player />,
+            component: (props) => <Player {...props} />,
             name: "player",
             order: 1,
             target: "#player",
@@ -58,6 +65,7 @@ const conductor = new NeoReact<any>(
     target: "#root",
     extensions: {
       reduxSaga: SagaSupport,
+      logger: CustomLogger
     },
     // Maybe?
     debug: true,

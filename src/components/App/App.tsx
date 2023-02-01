@@ -46,7 +46,7 @@ export const App: React.FC = () => {
 
 						<Switch>
 							<Route exact path="/">
-								<Stream />
+								<Stream isCurrentlyPlaying={false} onPlay={console.log} />
 							</Route>
 						</Switch>
 

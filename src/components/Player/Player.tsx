@@ -14,7 +14,8 @@ interface AudioState {
 /**
  * TODO: Clean up this component where possible. currently it's a massive mess.
  */
-export const Player: React.FC = () => {
+export const Player: React.FC = (props) => {
+	console.log(props)
 	const [audioState, setAudioState] = React.useState<AudioState>({ currentTime: 0, duration: 0, playing: false });
 	const [currentlyPlaying, setCurrentlyPlaying] = React.useState<SoundCloudTrack | null>(null);
 	const [currentlyPlayingId, setCurrentlyPlayingId] = React.useState<string | undefined>();

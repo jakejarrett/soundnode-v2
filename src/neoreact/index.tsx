@@ -4,12 +4,13 @@ import {
   Service,
   NeoExtension,
   ComponentType,
-  RenderService,
+  RenderService
 } from "./src/core";
-import React from "react";
 
 export class NeoReact<T> implements INeoReact<T> {
-  private extension: NeoExtension = {};
+  private extension: NeoExtension = {
+    utility: [],
+  };
 
   constructor(
     private config: Configuration<T>,
@@ -26,19 +27,18 @@ export class NeoReact<T> implements INeoReact<T> {
   create() {}
 
   public render() {
-    const component =
-      typeof this.config.component === "function"
-        ? this.config.component({})
-        : this.config.component;
-
+    let component;
+    if (typeof this.config.component === "function") {
+      component = this.config.component({});
+    } else {
+      component = this.config.component;
+    }
     this.renderer(component, document.querySelector(this.config.target));
 
     let renderByService: RenderService = {};
 
     for (const service of this.config.services) {
-      console.log(service);
       for (const zone of service.zones) {
-        console.log(service.state);
         renderByService = {
           ...renderByService,
           [zone.target]: {
@@ -46,27 +46,25 @@ export class NeoReact<T> implements INeoReact<T> {
             [zone.name]: {
               service: service.name,
               component: zone.component,
-              order: zone.order,
-            },
-          },
+              order: zone.order
+            }
+          }
         };
       }
     }
 
     for (const service in renderByService) {
-      const zoneValue = Object.values(renderByService[service]);
+      const zoneValue = Object.values(renderByService[service]).sort((first, second) => first.order - second.order);
       let comp: JSX.Element[] = [];
       const els = document.querySelector(service);
       for (const zone of zoneValue) {
         if (typeof zone.component === "function") {
-          comp.push(zone.component({}));
+          comp.push(zone.component({ extensions: this.config.extensions }));
         } else {
           comp.push(zone.component);
         }
       }
       this.renderer(comp, els);
     }
-
-    console.log(renderByService);
   }
 }
